@@ -1,0 +1,202 @@
+#container{
+	margin: 0 auto;
+	border: 1px solid #c2c2c2;
+	width: 300px !important;
+	height: 450px;
+	text-align: center;
+	z-index: 1;
+}
+#player{
+	background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;
+	/*background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;  GREEN*/ 
+	/*background: linear-gradient(#546E7A 20%, #607D8B 100%) 100% no-repeat;  CLASSIC*/
+	/*background: linear-gradient(#2196F3 20%, #42A5F5  100%) 100% no-repeat; BLUE*/
+	/*background: linear-gradient(#f2746f 20%, #f59764  100%) 100% no-repeat; MAIN*/
+	/*background: linear-gradient(#E91E63 20%, #E91E63  100%) 100% no-repeat; PINK*/
+	/*box-shadow: 1px 5px 10px 4px rgba(0,0,0,0.21);*/
+	margin: 0 auto;
+	width: 300px !important;
+	text-align: center;
+	z-index: 1;
+}
+.customBtn{
+	cursor: pointer;
+	width: 90px;
+	height: 28px;
+	background: #009688;
+	/*background: #009688; Green*/
+	/*background: #212121; Classic*/
+	/*background: #01579B; Blue*/
+	/*background: #ff3870; Main*/
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	border: 1px solid #009688;
+  border-radius: 8px;
+	margin-bottom: 8px;
+}
+#settingsBox{
+	background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;
+	margin: 0 auto;
+	width: 300px;
+	height: 450px;
+	text-align: center;
+  border: 1px solid #c4c4c4;
+  border-radius: 1px;
+  display: none;
+	margin-top: 50px;
+	z-index: 2;
+}
+#addNewTaskBox{
+	background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;
+	margin: 0 auto;
+	width: 300px;
+	height: 450px;
+	text-align: center;
+  border: 1px solid #c4c4c4;
+  border-radius: 1px;
+  display: none;
+	margin-top: 50px;
+	z-index: 2;
+}
+.menuButton{
+	width: 80px;
+	background: white;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	border: 1px solid #c4c4c4;
+  border-radius: 8px;
+}
+#time{
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	font-size: 60px;
+	margin-bottom: 30px !important;
+}
+.material-icons { 
+	cursor: pointer;
+	font-size: 36px !important; 
+}
+.player-icons{
+	cursor: pointer;
+	font-size: 48px !important;
+	user-select: none;  
+}
+h1{
+	font-size: 60px;
+	text-align: center;
+}
+span{
+	cursor: default;
+	font-family: 'Roboto', sans-serif;
+	color: rgba(0,0,0,0.7);
+	font-size: 14px;
+	user-select: none;  
+}
+i{
+	color: white;
+	user-select: none;  
+}
+.menuIcons{
+	color: white;
+}
+.text{
+	font-family: 'Roboto', sans-serif;
+	margin: 5px;
+}
+.headerContainer{
+	position: relative;
+	width: 300px;
+	height: 40px;
+	margin-bottom: 20px;
+	z-index: 3;
+}
+#settingsBtn{
+	position: absolute;
+	left: 10px;
+	top: 5px;
+}
+#addBtn{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+}
+#btnBox{
+	margin-top: 2px;
+}
+#tasks{
+	width: 300px;
+	background: #ffffff;
+	padding-top: 5px;
+}
+.task{	
+	width: 285px;
+	background: #ffffff;
+	padding-left: 10px;
+	padding-top: 5px;
+	text-align: left;
+	height: 30px;
+}
+.taskState{
+	user-select: none;  
+	color: #36cf85;
+}
+.taskTime{
+	float: right;
+	color: rgba(0,0,0,0.4);
+	margin-right: 10px;
+	font-size: 12px;
+	text-align: right;
+}
+#subMenu{
+	position: relative;
+	background: #ffffff;
+	width: 300px;
+	height: 40px;
+	z-index: 3;
+}
+.subMenuClass{
+	position: relative;
+	background: #fcfcfc;
+	padding-top: 10px;
+	border-bottom: 1px solid rgba(194,194,194,.25);
+	float: left;
+	width: 100px;
+	height: 30px;
+}
+.subMenuTitle{
+	cursor: pointer;
+	color: black !important;
+	font-size: 15px;
+}
+.userMinutes{
+	width: 30px;
+}
+.userSeconds{
+	width: 30px;
+}
+#customizeTime{
+	margin-top: 10px;	
+}
+#backBtn{
+	position: absolute;
+	left: 10px;
+	top: 5px;
+	z-index: 3;
+}
+#cancelAddBtn{
+	position: absolute;
+	left: 10px;
+	top: 5px;
+	z-index: 3;
+}
+.screenTitle{
+	color: white;
+	position: absolute;
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	right: 10px;
+	left: 10px;
+	top: 10px;
+}

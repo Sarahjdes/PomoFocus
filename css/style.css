@@ -19,6 +19,19 @@
 	text-align: center;
 	z-index: 1;
 }
+#mainScreenTitle{
+	color: white;
+	position: absolute;
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	right: 10px;
+	left: 10px;
+	top: 10px;
+	user-select: none; 
+	cursor: default;
+}
 .customBtn{
 	cursor: pointer;
 	width: 90px;
@@ -36,11 +49,10 @@
 	margin-bottom: 8px;
 }
 #settingsBox{
-	background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;
+	background: #fcfcfc;
 	margin: 0 auto;
 	width: 300px;
 	height: 450px;
-	text-align: center;
   border: 1px solid #c4c4c4;
   border-radius: 1px;
   display: none;
@@ -48,11 +60,10 @@
 	z-index: 2;
 }
 #addNewTaskBox{
-	background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;
+	background: #fcfcfc;
 	margin: 0 auto;
 	width: 300px;
 	height: 450px;
-	text-align: center;
   border: 1px solid #c4c4c4;
   border-radius: 1px;
   display: none;
@@ -67,11 +78,17 @@
 	border: 1px solid #c4c4c4;
   border-radius: 8px;
 }
+.menuIcons{
+	color: white;
+	user-select: none; 
+}
 #time{
 	color: white;
 	font-family: 'Roboto', sans-serif;
 	font-size: 60px;
 	margin-bottom: 30px !important;
+	user-select: none;
+	cursor: default;
 }
 .material-icons { 
 	cursor: pointer;
@@ -79,32 +96,109 @@
 }
 .player-icons{
 	cursor: pointer;
+	color: white;
 	font-size: 48px !important;
 	user-select: none;  
 }
 h1{
+	font-family:  'Asap', sans-serif;
 	font-size: 60px;
 	text-align: center;
 }
-span{
-	cursor: default;
+.viewIcons{
+	cursor: pointer;
+	color: black;
+	user-select: none;
+}
+.viewBtn{
+	position: relative;
+	background: white;
+	width : 93% !important;
+	height: 55px;
+	margin-left: 3%;
+	border: 1px solid #c4c4c4;
+  border-radius: 8px;
+	margin-bottom: 8px;
+	cursor: pointer;
+}
+.viewTitle{
+	color: black;
+	position: absolute;
 	font-family: 'Roboto', sans-serif;
-	color: rgba(0,0,0,0.7);
-	font-size: 14px;
-	user-select: none;  
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	right: 10px;
+	left: 10px;
+	top: 10px;
 }
-i{
-	color: white;
-	user-select: none;  
-}
-.menuIcons{
-	color: white;
-}
-.text{
+.headText{
+	position: absolute;
 	font-family: 'Roboto', sans-serif;
-	margin: 5px;
+	color: black !important;
+	text-align: left;
+	font-size: 16px;
+	left: 10px;
+	top: 14px;
+	cursor: pointer;
+	user-select: none;
+}
+.subText{
+	position: absolute;
+	font-family: 'Roboto', sans-serif;
+	color: rgba(0,0,0,0.4);
+	text-align: left;
+	font-size: 11px;
+	left: 11px;
+	top: 33px;
+	cursor: pointer;
+	user-select: none;
+}
+.settingsIcons{
+	position: absolute;
+	/*color: #E91E63;*/
+	color: #47c9a2;
+	cursor: pointer;
+	font-size: 24px !important; 
+	right: 10px;
+	top: 14px;
+	user-select: none;
+}
+#viewSlider{
+	position: relative;
+	border-top: 1px solid rgba(194,194,194,.25);
+	width : 93% !important;
+	height: 55px;
+	margin-left: 3%;
+}
+#volumeSlider{
+	width: 250px;	
+	margin-left: 5%;
+	margin-top: 30px;
+}
+#viewCheckBox{
+	position: relative;
+	border-bottom: 1px solid rgba(194,194,194,.25);
+	width : 93% !important;
+	height: 55px;
+	margin-left: 3%;
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
+#vibrarCheck{
+	position: absolute;
+	left: 240px;
+	top: 12px;
 }
 .headerContainer{
+	border-bottom: 1px solid rgba(194,194,194,.25);
+	position: relative;
+	width: 300px;
+	height: 40px;
+	margin-bottom: 20px;
+	z-index: 3;
+}
+.mainContainer{
 	position: relative;
 	width: 300px;
 	height: 40px;
@@ -142,11 +236,41 @@ i{
 	color: #36cf85;
 }
 .taskTime{
+	font-family: 'Roboto', sans-serif;
 	float: right;
 	color: rgba(0,0,0,0.4);
 	margin-right: 10px;
 	font-size: 12px;
 	text-align: right;
+}
+.taskText{
+	font-family: 'Roboto', sans-serif;
+	color: rgba(0,0,0,0.7);
+	font-size: 14px;
+	user-select: none;
+	cursor: default;
+}
+.addTaskForm{
+	border-bottom: 1px solid rgba(194,194,194,.25);
+	position: relative;
+	width : 93% !important;
+	height: 60px;
+	margin-left: 3%;
+	margin-bottom: 8px;
+	cursor: pointer;
+}
+#addInput{
+	position: absolute;
+	top: 24px;
+	width: 100%;
+	height: 25px;
+	border: 1px solid #c4c4c4;
+  border-radius: 4px;
+	background-color: #fff;
+}
+.addTaskText{
+	font-size: 18;
+	top: 0px;
 }
 #subMenu{
 	position: relative;
@@ -165,6 +289,7 @@ i{
 	height: 30px;
 }
 .subMenuTitle{
+	font-family: 'Roboto', sans-serif;
 	cursor: pointer;
 	color: black !important;
 	font-size: 15px;
@@ -178,6 +303,9 @@ i{
 #customizeTime{
 	margin-top: 10px;	
 }
+#customizeTimeBox{
+	display:none;
+}
 #backBtn{
 	position: absolute;
 	left: 10px;
@@ -190,13 +318,25 @@ i{
 	top: 5px;
 	z-index: 3;
 }
-.screenTitle{
-	color: white;
-	position: absolute;
-	font-family: 'Roboto', sans-serif;
-	font-size: 18px;
-	font-weight: bold;
-	right: 10px;
-	left: 10px;
-	top: 10px;
+input[type=range] {
+	-webkit-appearance: none;
+	height: 10px;
+	border: 1px solid #c4c4c4;
+  border-radius: 4px;
+	background-color: #fff;
+}
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	/*background-color: #E91E63;*/
+	background-color: #47c9a2;
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }

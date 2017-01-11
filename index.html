@@ -1,6 +1,8 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>PomoFocus</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Asap:700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -9,12 +11,12 @@
 	<h1>PomoFocus</h1>
 	<div id="container">
 		<div id="player">
-			<div class="headerContainer">
-				<span class="screenTitle">PomoFocus</span>
+			<div class="mainContainer">
+				<span id="mainScreenTitle">PomoFocus</span>
 				<i class="material-icons menuIcons" id="settingsBtn">settings</i>
 				<i class="material-icons menuIcons" id="addBtn">add</i>
 			</div>
-			<span id="time" class="text">25 : 00</span>
+			<span id="time">25 : 00</span>
 			<div id="btnBox">
 				<i class="material-icons player-icons" id="startBtn">play_circle_outline</i>
 				<i class="material-icons player-icons" id="stopBtn">pause_circle_outline</i>
@@ -40,24 +42,79 @@
 		</div>
 		<div id="tasks">
 			<div id="task1" class="task">
-				<span id="changeMe"><i class="fa fa-check-circle-o  taskState"></i> Estudiar Desarrollo de Apps </span>
+				<span  class="taskText"><i class="fa fa-check-circle-o  taskState"></i> Estudiar Desarrollo de Apps </span>
 				<span class="taskTime">10:25</span>
 			</div>
 			<div id="task2" class="task">
-				<span><i class="fa fa-check-circle-o taskState"></i> Diseñar Mockups </span>
+				<span class="taskText"><i class="fa fa-check-circle-o taskState"></i> Diseñar Mockups </span>
 				<span class="taskTime">10:25</span>
 			</div>
 			<div id="task3" class="task">
-				<span><i class="fa fa-circle-o  taskState"></i> Trabajar en Presentación </span>
+				<span class="taskText"><i class="fa fa-circle-o  taskState"></i> Trabajar en Presentación </span>
 				<span class="taskTime">10:25</span>
 			</div>
 		</div>
 	</div>
+	<!-- SETTINGS BOX -->
 	<div id="settingsBox">
 		<div class="headerContainer">
-			<i class="fa fa-arrow-left fa-2x" id="backBtn"></i>
-			<span class="screenTitle">Settings</span>
+			<i class="fa fa-arrow-left fa-2x viewIcons" id="backBtn"></i>
+			<span class="viewTitle">Settings</span>
 		</div>
+		
+		<div class="viewBtn">
+			<span class="headText">Cambiar Estilo</span>
+			<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
+			<span class="subText">'Green'</span>
+		</div>
+		<div class="viewBtn">
+			<span class="headText">Tono de Alarma</span>
+			<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
+			<span class="subText">'Happy Song'</span>
+		</div>
+		<div id="viewSlider">
+			<span class="headText">Volumen de Alarma</span><br>
+			<input type="range" min="0" max="100" id="volumeSlider">
+		</div>
+		<div id="viewCheckBox">
+			<span class="headText">Vibrar cuando suene la alarma</span>
+			<i class="material-icons settingsIcons" id="vibrarCheck">check_box</i>
+		</div>
+		<div class="viewBtn">
+			<span class="headText">Califica esta aplicación</span>
+			<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
+		</div>
+	</div>
+	
+	<!-- NEW TASK BOX -->
+	<div id="addNewTaskBox">
+		<div class="headerContainer">
+			<i class="fa fa-arrow-left fa-2x viewIcons" id="cancelAddBtn"></i>
+			<span class="viewTitle">Add New Task</span>
+		</div>
+		<div class="addTaskForm">
+				<span class="headText addTaskText">Task Name</span><br>
+				<input id="addInput" type="text">
+		</div>
+		<div class="addTaskForm">
+			<span class="headText addTaskText">Start Time</span><br>
+			<input type="number" class="text userMinutes" value="10">:<input type="number" class="text userSeconds" value="30">
+		</div>
+		<div class="addTaskForm">
+			<span class="headText addTaskText">Pomodoro Length</span><br>
+			<span> 5 - 10 - 15 - 20 - 25</span>
+			<span>Custom</span>
+			<div>
+				<input type="checkbox">
+				<span> Add notification?</span>
+			</div>
+		</div>
+		<button type="button" class="menuButton">Add Task</button>
+	</div>
+	
+	
+	
+	<div id="customizeTimeBox">
 		<div id="customizeTime">
 			<form>
 				<span class="text">Please enter the desired length</span><br>
@@ -66,27 +123,5 @@
 				<br><span>Minutes / Seconds</span><br>
 			</form>
 		</div>
-	</div>
-	<div id="addNewTaskBox">
-		<div class="headerContainer">
-			<i class="fa fa-arrow-left fa-2x" id="cancelAddBtn"></i>
-			<span class="screenTitle">Add New Task</span>
-		</div>
-		<div id="addTaskName">
-			<span>Task Name</span><br>
-			<input type="text">
-		</div>
-		<div id="addTaskStartTime">
-			<span>Start Time</span><br>
-			<input type="number" class="text userMinutes" value="10">:<input type="number" class="text userSeconds" value="30">
-		</div>
-		<div id="newTaskDuration">
-			<span> 5 - 10 - 15 - 20 - 25</span>
-		</div>
-		<div>
-			<input type="checkbox">
-			<span> Add notification?</span>
-		</div>
-		<button type="button" class="menuButton">Add Task</button>
 	</div>
 </body>

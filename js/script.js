@@ -6,8 +6,6 @@ var initMinutes = 25;
 var initSeconds = 00;
 var pomodoroFlag = 0;
 
-// crear el array de objetos
-
 function pageLoaded(){
 	var startBtn = document.getElementById("startBtn");
 	var stopBtn = document.getElementById("stopBtn");

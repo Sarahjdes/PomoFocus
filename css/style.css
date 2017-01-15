@@ -1,8 +1,21 @@
+#mainContainer{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	top:0px;
+  left:0px;
+}
 #container{
 	margin: 0 auto;
-	border: 1px solid #c2c2c2;
-	width: 300px !important;
-	height: 450px;
+	top: 0;
+  left: 0;
+	position: absolute;
+	/*width: 300px !important;
+	height: 450px;*/
+	width: 100%;
+  height: 40%;
 	text-align: center;
 	z-index: 1;
 }
@@ -15,7 +28,7 @@
 	/*background: linear-gradient(#E91E63 20%, #E91E63  100%) 100% no-repeat; PINK*/
 	/*box-shadow: 1px 5px 10px 4px rgba(0,0,0,0.21);*/
 	margin: 0 auto;
-	width: 300px !important;
+	width: 100% !important;
 	text-align: center;
 	z-index: 1;
 }
@@ -51,32 +64,22 @@
 #settingsBox{
 	background: #fcfcfc;
 	margin: 0 auto;
-	width: 300px;
-	height: 450px;
-  border: 1px solid #c4c4c4;
-  border-radius: 1px;
+	top: 0;
+  left: 0;
+	width: 100%;
+	height: auto;
   display: none;
-	margin-top: 50px;
 	z-index: 2;
 }
 #addNewTaskBox{
 	background: #fcfcfc;
 	margin: 0 auto;
-	width: 300px;
-	height: 450px;
-  border: 1px solid #c4c4c4;
-  border-radius: 1px;
+	top: 0;
+  left: 0;
+	width: 100%;
+	height: auto;
   display: none;
-	margin-top: 50px;
 	z-index: 2;
-}
-.menuButton{
-	width: 80px;
-	background: white;
-	font-family: 'Roboto', sans-serif;
-	font-size: 15px;
-	border: 1px solid #c4c4c4;
-  border-radius: 8px;
 }
 .menuIcons{
 	color: white;
@@ -106,9 +109,13 @@ h1{
 	text-align: center;
 }
 .viewIcons{
+	position: absolute;
 	cursor: pointer;
 	color: black;
 	user-select: none;
+	left: 5%;
+	top: 5%;
+	z-index: 3;
 }
 .viewBtn{
 	position: relative;
@@ -122,15 +129,15 @@ h1{
 	cursor: pointer;
 }
 .viewTitle{
-	color: black;
 	position: absolute;
+	margin: 0 auto;
+	color: black;
 	font-family: 'Roboto', sans-serif;
 	font-size: 18px;
 	font-weight: bold;
-	text-align: center;
-	right: 10px;
-	left: 10px;
-	top: 10px;
+  left: 50%;
+	top: 40%;
+	transform: translateX(-50%) translateY(-40%);
 }
 .headText{
 	position: absolute;
@@ -167,6 +174,7 @@ h1{
 #viewSlider{
 	position: relative;
 	border-top: 1px solid rgba(194,194,194,.25);
+	text-align: center;
 	width : 93% !important;
 	height: 55px;
 	margin-left: 3%;
@@ -193,14 +201,14 @@ h1{
 .headerContainer{
 	border-bottom: 1px solid rgba(194,194,194,.25);
 	position: relative;
-	width: 300px;
+	width: 100%;
 	height: 40px;
 	margin-bottom: 20px;
 	z-index: 3;
 }
-.mainContainer{
+.playerContainer{
 	position: relative;
-	width: 300px;
+	width: 100%;
 	height: 40px;
 	margin-bottom: 20px;
 	z-index: 3;
@@ -219,14 +227,16 @@ h1{
 	margin-top: 2px;
 }
 #tasks{
-	width: 300px;
+	position: relative;
+	width: 100%;
+	height: auto;
 	background: #ffffff;
 	padding-top: 5px;
 }
 .task{	
-	width: 285px;
+	width: 100%;
 	background: #ffffff;
-	padding-left: 10px;
+	padding-left: 5%;
 	padding-top: 5px;
 	text-align: left;
 	height: 30px;
@@ -236,10 +246,10 @@ h1{
 	color: #36cf85;
 }
 .taskTime{
+	position: absolute;
 	font-family: 'Roboto', sans-serif;
-	float: right;
+	right: 5%;
 	color: rgba(0,0,0,0.4);
-	margin-right: 10px;
 	font-size: 12px;
 	text-align: right;
 }
@@ -275,7 +285,7 @@ h1{
 #subMenu{
 	position: relative;
 	background: #ffffff;
-	width: 300px;
+	width: 100%;
 	height: 40px;
 	z-index: 3;
 }
@@ -285,7 +295,7 @@ h1{
 	padding-top: 10px;
 	border-bottom: 1px solid rgba(194,194,194,.25);
 	float: left;
-	width: 100px;
+	width: 33.3%;
 	height: 30px;
 }
 .subMenuTitle{
@@ -306,17 +316,69 @@ h1{
 #customizeTimeBox{
 	display: none;
 }
-#backBtn{
+.optionsBox{
+	display: none;
+	background: white;
 	position: absolute;
-	left: 10px;
-	top: 5px;
-	z-index: 3;
+  left: 50%;
+	top: 10%;
+	transform: translateX(-50%) translateY(-10%);
+	margin: 0 auto;
+	margin-top: 20%;
+	font-family: 'Roboto', sans-serif;
+	width: 30%;
+  height: auto;
+	font-size: 20px;
+	max-width: 400px;
+	min-width: 220px;
+	border: 1px solid #c4c4c4;
+  border-radius: 8px;
+	z-index: 10;
 }
-#cancelAddBtn{
+.themeBtn{
+	border-bottom: 1px solid #c4c4c4;
+	width: 100%;
+	height: 30px;
+	padding-top: 10px;
+}
+.themeBtn :: span{
+	color: red;
+}
+.popupText{
+	padding-left: 10px;
+}
+.popupRadio{
 	position: absolute;
-	left: 10px;
-	top: 5px;
-	z-index: 3;
+	right: 5%;
+	text-align: right;
+}
+.endThemeBtn{
+	text-align: center;
+	padding: 10px;
+}
+.menuButton{
+	width: 90px;
+	height: 30px;
+	background: white;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	border: 1px solid #c4c4c4;
+  border-radius: 8px;
+}
+.menuButton:active{
+	background: #c4c4c4;
+}
+#shadowBox{
+	display: none;
+	background: black;
+	opacity: 0.8;
+	position: fixed;
+	width: 100%;
+  height: 100%;
+	top: 0;
+  left: 0;
+	margin: 0 auto;
+	z-index: 9;
 }
 input[type=range] {
 	-webkit-appearance: none;
@@ -327,10 +389,9 @@ input[type=range] {
 }
 input[type='range']::-webkit-slider-thumb {
 	-webkit-appearance: none;
-	/*background-color: #E91E63;*/
 	background-color: #47c9a2;
-	width: 15px;
-	height: 15px;
+	width: 20px;
+	height: 20px;
 	border-radius: 10px;
 	cursor: pointer;
 }

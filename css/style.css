@@ -21,7 +21,7 @@
 }
 #player{
 	background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;
-	/*background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;  GREEN*/ 
+	/*background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;  GREEN*/
 	/*background: linear-gradient(#546E7A 20%, #607D8B 100%) 100% no-repeat;  CLASSIC*/
 	/*background: linear-gradient(#2196F3 20%, #42A5F5  100%) 100% no-repeat; BLUE*/
 	/*background: linear-gradient(#f2746f 20%, #f59764  100%) 100% no-repeat; MAIN*/
@@ -42,7 +42,7 @@
 	right: 10px;
 	left: 10px;
 	top: 10px;
-	user-select: none; 
+	user-select: none;
 	cursor: default;
 }
 .customBtn{
@@ -83,7 +83,7 @@
 }
 .menuIcons{
 	color: white;
-	user-select: none; 
+	user-select: none;
 }
 #time{
 	color: white;
@@ -93,15 +93,15 @@
 	user-select: none;
 	cursor: default;
 }
-.material-icons { 
+.material-icons {
 	cursor: pointer;
-	font-size: 36px !important; 
+	font-size: 36px !important;
 }
 .player-icons{
 	cursor: pointer;
 	color: white;
 	font-size: 48px !important;
-	user-select: none;  
+	user-select: none;
 }
 h1{
 	font-family:  'Asap', sans-serif;
@@ -166,7 +166,7 @@ h1{
 	/*color: #E91E63;*/
 	color: #47c9a2;
 	cursor: pointer;
-	font-size: 24px !important; 
+	font-size: 24px !important;
 	right: 10px;
 	top: 14px;
 	user-select: none;
@@ -180,7 +180,7 @@ h1{
 	margin-left: 3%;
 }
 #volumeSlider{
-	width: 250px;	
+	width: 250px;
 	margin-left: 5%;
 	margin-top: 30px;
 }
@@ -233,7 +233,7 @@ h1{
 	background: #ffffff;
 	padding-top: 5px;
 }
-.task{	
+.task{
 	width: 100%;
 	background: #ffffff;
 	padding-left: 5%;
@@ -242,7 +242,7 @@ h1{
 	height: 30px;
 }
 .taskState{
-	user-select: none;  
+	user-select: none;
 	color: #36cf85;
 }
 .taskTime{
@@ -311,7 +311,7 @@ h1{
 	width: 30px;
 }
 #customizeTime{
-	margin-top: 10px;	
+	margin-top: 10px;
 }
 #customizeTimeBox{
 	display: none;

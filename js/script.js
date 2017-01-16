@@ -6,6 +6,7 @@ var clock = {
 	"pomodoroFlag" : 0
 };
 var volume = 1.0;
+var vibrar = true;
 window.onload = pageLoaded();
 
 function pageLoaded(){
@@ -188,6 +189,9 @@ function decreaseTime(){
 	if(clock.minutes == 0 && clock.seconds == 0){
 		// Pomodoro Completed
 		playAlarmClock();
+		if(vibrar === true){
+		    Android.alarmVibrate();
+		}
 		stopPomodoro();
 	}else if(clock.seconds == 0){
 		clock.minutes--;

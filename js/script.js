@@ -5,8 +5,29 @@ var clock = {
 	"initSeconds" : 00,
 	"pomodoroFlag" : 0
 };
-var volume = 50;
-var vibrar = true;
+var app = {
+    "settings" : {
+        "userTheme" : "Green",
+        "alarmSong" : "Alarm 1",
+        "alarmVolume" : 50,
+        "alarmVibrate" : "false"
+    },
+    "stats" : {
+        "finishedPomos" : "0",
+        "success": "0",
+        "failed": "0",
+        "pomodoros" : [
+            {
+                "pomodoro" : {
+                    "date" : "27/03/2017",
+                    "duration" : "25",
+                    "state": "none"
+                }
+            }
+        ]
+    }
+};
+
 window.onload = pageLoaded();
 
 function pageLoaded(){
@@ -16,147 +37,41 @@ function pageLoaded(){
 	var settingsBox = document.getElementById("settingsBox");
 	var settingsBtn = document.getElementById("settingsBtn");
 	var backBtn = document.getElementById("backBtn");
-	var cancelBtn = document.getElementById("cancelAddBtn");
 	var addBtn = document.getElementById("addBtn");
 	var mainBox = document.getElementById("container");
 	var customBox = document.getElementById("customizeTimeBox");
 	var customBtn = document.getElementById("customBtn");
 	var backCustom = document.getElementById("backCustom");
-	var addNewTaskBox = document.getElementById("addNewTaskBox");
-	var addNewTaskBtn = document.getElementById("addNewTaskBtn");
 	var shadowBox = document.getElementById("shadowBox");
-	var themeBox = document.getElementById("userThemeBox");
 	var themeBtn = document.getElementById("themeBtn");
 	var alarmBtn = document.getElementById("alarmBtn");
-	var alarmBox = document.getElementById("alarmBox");
-	var cancelThemeBox = document.getElementById("cancelThemeBox");
-	var saveThemeBox = document.getElementById("saveThemeBox");
-	var cancelAlarmBox = document.getElementById("cancelAlarmBox");
-	var saveAlarmBox = document.getElementById("saveAlarmBox");
-	var app = {
-		"settings" : {
-			/* App settings */
-			"userTheme" : "Green",
-			"alarmSong" : "Happy Song",
-			"alarmVolume" : "50",
-			"alarmVibrate" : "false"
-		},
-		"stats" : {
-			/* some basic pomodoro stats and an array of pomodoro objects */
-			/* each pomodoro objects contains: date, duration and state, there are 3 possible states
-			 	- success: the pomodoro was finished successfully
-			 	- failure: the user failed to finish the pomodoro
-			 	- none: the pomodoro has not been executed yet */
-			"finishedPomos" : "0",
-			"success": "0",
-			"failed": "0",
-			"pomodoros" : [
-				{
-					"pomodoro" : {
-						"date" : "27/03/2017",
-						"duration" : "25", // duration is in minutes
-						"state": "none"
-					}
-				},
-				{
-					"pomodoro" : {
-						"date" : "18/07/2017",
-						"duration" : "10",
-						"state": "none"
-					}
-				}
-			]
-		}
-	};
-    // Load user settings from localStorage
-	app = loadSettings(app);
-	// Update user settings, alarm song, volume, vibration on, etc
-    document.getElementById("volumeSlider").value = app.settings.alarmVolume;
-	updateUserSettings(app.settings);
+
+    // Load user settings from localStorage and update the app object
+	loadSettings();
+	// Put the values in the actual dom
+  document.getElementById("volumeSlider").value = app.settings.alarmVolume;
+	updateUserTheme();
     // Update the user task list for today, user stats, etc
-    updateApp(app);
+    // updateApp();
 
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
-	addBtn.onclick = function addTask(){
-		// Shows the add new task menu and waits for user input
-		addNewTaskBox.style.display = 'block';
-		mainBox.style.display = 'none';
-		addNewTaskBtn.onclick = function goBack(){
-			// Hides the add menu and shows the main screen
-			addNewTaskBox.style.display = 'none';
-			mainBox.style.display = 'block';
-			// add the new task to the app object, then save the app state
-		};
-		cancelBtn.onclick = function goBack(){
-			addNewTaskBox.style.display = 'none';
-			mainBox.style.display = 'block';
-		};
-	};
-	settingsBtn.onclick = function settingsPanel(){
+	addBtn.onclick = addNewTask;
+
+	settingsBtn.onclick = function showSettingsPanel(){
 		// Shows the settings panel and waits for user input
-		var settingsObject = app.settings;
+		updateAlarmCheckBox();
 		document.getElementById("volumeSlider").value = app.settings.alarmVolume;
+		document.getElementById("vibrarCheck").checked = JSON.parse(app.settings.alarmVibrate);
+		document.getElementById("selectedAlarm").innerHTML = app.settings.alarmSong;
+		// Show the settings view and hiddes the main view
 		settingsBox.style.display = 'block';
 		mainBox.style.display = 'none';
-		themeBtn.onclick = function showThemeSelection(){
-			// mostrar la seleccion de tema
-			shadowBox.style.display = 'block';
-			themeBox.style.display = 'block';
-			cancelThemeBox.onclick = function cancel(){
-				shadowBox.style.display = 'none';
-				themeBox.style.display = 'none';
-			};
-			saveThemeBox.onclick = function save(){
-				// save the user selected theme
-				var userTheme;
-				if(document.getElementById("userThemeR1").checked){
-					userTheme = document.getElementById("userThemeR1").value;
-				}else if(document.getElementById("userThemeR2").checked){
-					userTheme = document.getElementById("userThemeR2").value;
-				}else if(document.getElementById("userThemeR3").checked){
-					userTheme = document.getElementById("userThemeR3").value;
-				}else if(document.getElementById("userThemeR4").checked){
-					userTheme = document.getElementById("userThemeR4").value;
-				}
-				settingsObject.userTheme = userTheme;
-				updateUserSettings(settingsObject);
-				shadowBox.style.display = 'none';
-				themeBox.style.display = 'none';
-			};
-		};
-		alarmBtn.onclick = function showAlarmSelection(){
-			shadowBox.style.display = 'block';
-			alarmBox.style.display = 'block';
-			cancelAlarmBox.onclick = function cancel(){
-				shadowBox.style.display = 'none';
-				alarmBox.style.display = 'none';
-			};
-			saveAlarmBox.onclick = function save(){
-			    // save the user alarm sound
-			    var userSong;
-                if(document.getElementById("userAlarmR1").checked){
-                    userSong = document.getElementById("userAlarmR1").value;
-                }else if(document.getElementById("userAlarmR2").checked){
-                	userSong = document.getElementById("userAlarmR2").value;
-                }else if(document.getElementById("userAlarmR3").checked){
-                	userSong = document.getElementById("userAlarmR3").value;
-                }else if(document.getElementById("userAlarmR4").checked){
-                	userSong = document.getElementById("userAlarmR4").value;
-                }
-                settingsObject.alarmSong = userSong;
-                shadowBox.style.display = 'none';
-                alarmBox.style.display = 'none';
-			};
-		};
+		themeBtn.onclick = showThemeSelection;
+		alarmBtn.onclick = showAlarmSelection;
 		backBtn.onclick = function saveUserSettings(){
-			// Saves the user settings
-			settingsObject.alarmVolume = volume;
-            document.getElementById("volumeSlider").value = volume;
-			app.settings = settingsObject;
-			updateUserSettings(app.settings);
-			saveAppState(app);
+			saveAppState();
 			settingsBox.style.display = 'none';
 			mainBox.style.display = 'block';
 		};
@@ -193,7 +108,7 @@ function decreaseTime(){
 	if(clock.minutes == 0 && clock.seconds == 0){
 		// Pomodoro Completed
 		playAlarmClock();
-		if(vibrar === true){
+		if(app.settings.alarmVibrate === true){
 		    Android.alarmVibrate();
 		}
 		stopPomodoro();
@@ -210,6 +125,26 @@ function decreaseTime(){
 		timeShown.innerHTML = clock.minutes + " : " + clock.seconds;
 	}
 }
+function addNewTask(){
+    // Shows the add new task menu and waits for user input
+    var addNewTaskBox = document.getElementById("addNewTaskBox");
+    var addNewTaskBtn = document.getElementById("addNewTaskBtn");
+	var mainBox = document.getElementById("container");
+	var cancelBtn = document.getElementById("cancelAddBtn");
+
+    addNewTaskBox.style.display = 'block';
+    mainBox.style.display = 'none';
+    addNewTaskBtn.onclick = function goBack(){
+        // Hides the add menu and shows the main screen
+        addNewTaskBox.style.display = 'none';
+        mainBox.style.display = 'block';
+        // add the new task to the app object, then save the app state
+    };
+    cancelBtn.onclick = function goBack(){
+        addNewTaskBox.style.display = 'none';
+        mainBox.style.display = 'block';
+    };
+}
 function updateTime(){
 	// Sets the time and initial time variables as the number entered by the user
 	var customBox = document.getElementById("customizeTimeBox");
@@ -224,19 +159,17 @@ function updateTime(){
 	timeShown.innerHTML = clock.minutes + " : " + clock.seconds;
 	customBox.style.display = 'none';
 }
-function updateUserSettings(settings){
-    var theme = settings.userTheme;
-    var alarm = settings.alarmSong;
-    var alarmVibrate = settings.alarmVibrate;
+function updateUserTheme(){
+    var theme = app.settings.userTheme;
 	var player = document.getElementById("player");
 	var iconos = document.getElementsByClassName("settingsIcons");
 	var btn = document.getElementsByClassName("customBtn");
-	var i;
-    // Update user theme
+	var i = 0;
+    // Update the user theme
 	document.getElementById("selectedTheme").innerHTML = theme;
 	if(theme == "Green"){
 	    document.getElementById("userThemeR1").checked = true;
-		player.style.background = "linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat";
+	    player.style.background = "radial-gradient(ellipse farthest-corner at center, #47C9A2 0%, #26A69A 100%)";
 		for(i = 0; i < iconos.length; i++){
 			iconos[i].style.color = "#47c9a2";
 		}
@@ -246,7 +179,7 @@ function updateUserSettings(settings){
 		}
 	}else if(theme == "Blue"){
 	    document.getElementById("userThemeR2").checked = true;
-		player.style.background = "linear-gradient(#2196F3 20%, #42A5F5  100%) 100% no-repeat";
+		player.style.background = "radial-gradient(ellipse farthest-corner at center, #42A5F5 0%, #2196F3 100%)";
 		for(i = 0; i < iconos.length; i++){
 			iconos[i].style.color = "#2196F3";
 		}
@@ -256,7 +189,7 @@ function updateUserSettings(settings){
 		}
 	}else if(theme == "Pink"){
 	    document.getElementById("userThemeR3").checked = true;
-		player.style.background = "linear-gradient(#E91E63 20%, #E91E63  100%) 100% no-repeat";
+		player.style.background = "radial-gradient(ellipse farthest-corner at center, #FC216B 0%, #E91E63 100%)";
 		for(i = 0; i < iconos.length; i++){
 			iconos[i].style.color = "#E91E63";
 		}
@@ -266,7 +199,7 @@ function updateUserSettings(settings){
 		}
 	}else if(theme == "Classic"){
 	    document.getElementById("userThemeR4").checked = true;
-		player.style.background = "linear-gradient(#546E7A 20%, #607D8B 100%) 100% no-repeat";
+		player.style.background = "radial-gradient(ellipse farthest-corner at center, #607D8B 0%, #546E7A 100%)";
 		for(i = 0; i < iconos.length; i++){
 			iconos[i].style.color = "#546E7A";
 		}
@@ -274,8 +207,21 @@ function updateUserSettings(settings){
 			btn[i].style.background = "#212121";
 			btn[i].style.borderColor = "#212121";
 		}
-	}
+	}else if(theme == "Bright"){
+        document.getElementById("userThemeR5").checked = true;
+        player.style.background = " radial-gradient(ellipse farthest-corner at center, #FF9D68 0%, #FF7A75 100%)";
+        for(i = 0; i < iconos.length; i++){
+            iconos[i].style.color = "#FF7A75";
+        }
+        for(i = 0; i < btn.length; i++){
+            btn[i].style.background = "#FF9D68";
+            btn[i].style.borderColor = "#FF9D68";
+        }
+    }
+}
+function updateAlarmCheckBox(){
 	// Update user alarm song
+	alarm = app.settings.alarmSong;
 	if(alarm == document.getElementById("userAlarmR1").value){
 	    document.getElementById("userAlarmR1").checked = true;
 	}else if(alarm == document.getElementById("userAlarmR2").value){
@@ -286,55 +232,113 @@ function updateUserSettings(settings){
         document.getElementById("userAlarmR4").checked = true;
     }
 }
-function updateApp(app){
+function showAlarmSelection(){
+	var shadowBox = document.getElementById("shadowBox");
+	var alarmBox = document.getElementById("alarmBox");
+	var cancelAlarmBox = document.getElementById("cancelAlarmBox");
+	var saveAlarmBox = document.getElementById("saveAlarmBox");
+
+	shadowBox.style.display = 'block';
+	alarmBox.style.display = 'block';
+	cancelAlarmBox.onclick = function cancel(){
+	    shadowBox.style.display = 'none';
+		alarmBox.style.display = 'none';
+	};
+	saveAlarmBox.onclick = function save(){
+	    // save the user alarm sound
+        var userSong;
+        if(document.getElementById("userAlarmR1").checked){
+            userSong = document.getElementById("userAlarmR1").value;
+        }else if(document.getElementById("userAlarmR2").checked){
+            userSong = document.getElementById("userAlarmR2").value;
+        }else if(document.getElementById("userAlarmR3").checked){
+            userSong = document.getElementById("userAlarmR3").value;
+        }else if(document.getElementById("userAlarmR4").checked){
+            userSong = document.getElementById("userAlarmR4").value;
+        }
+        app.settings.alarmSong = userSong;
+        document.getElementById("selectedAlarm").innerHTML = app.settings.alarmSong;
+        shadowBox.style.display = 'none';
+        alarmBox.style.display = 'none';
+    };
+};
+function showThemeSelection(){
+	var shadowBox = document.getElementById("shadowBox");
+	var themeBox = document.getElementById("userThemeBox");
+	var cancelThemeBox = document.getElementById("cancelThemeBox");
+	var saveThemeBox = document.getElementById("saveThemeBox");
+
+    // mostrar la seleccion de tema
+    shadowBox.style.display = 'block';
+    themeBox.style.display = 'block';
+    cancelThemeBox.onclick = function cancel(){
+        shadowBox.style.display = 'none';
+        themeBox.style.display = 'none';
+    };
+    saveThemeBox.onclick = function save(){
+        // save the user selected theme
+        var userTheme;
+        if(document.getElementById("userThemeR1").checked){
+            userTheme = document.getElementById("userThemeR1").value;
+        }else if(document.getElementById("userThemeR2").checked){
+            userTheme = document.getElementById("userThemeR2").value;
+        }else if(document.getElementById("userThemeR3").checked){
+            userTheme = document.getElementById("userThemeR3").value;
+        }else if(document.getElementById("userThemeR4").checked){
+            userTheme = document.getElementById("userThemeR4").value;
+        }else if(document.getElementById("userThemeR5").checked){
+            userTheme = document.getElementById("userThemeR5").value;
+        }
+        app.settings.userTheme = userTheme;
+        updateUserTheme();
+        shadowBox.style.display = 'none';
+        themeBox.style.display = 'none';
+    };
+};
+function updateApp(){
 	// Updates the user settings and task list
 }
 function playAlarmClock(){
 	var userAlarm;
-	if(document.getElementById("userAlarmR1").checked){
-		// Alarm = Alarm1
+	if(document.getElementById("userAlarmR1").checked){  		// Alarm = Alarm1
 		userAlarm = 1;
-	}else if(document.getElementById("userAlarmR2").checked){
-		// Alarm = Alarm2
+	}else if(document.getElementById("userAlarmR2").checked){   // Alarm = Alarm2
 		userAlarm = 2;
-	}else if(document.getElementById("userAlarmR3").checked){
-		// Alarm = Alarm3
+	}else if(document.getElementById("userAlarmR3").checked){   // Alarm = Alarm3
 		userAlarm = 3;
-	}else if(document.getElementById("userAlarmR4").checked){
-		// Alarm = No Alarm
+	}else if(document.getElementById("userAlarmR4").checked){   // Alarm = No Alarm
 		userAlarm = 0;
 	}
 	playAlarm(userAlarm);
 }
-function playAlarm(sound){
-	if(sound != 0){
-        Android.playSound(sound, volume);
+function playAlarm(alarm){
+	if(alarm != 0){
+        Android.playSound(alarm, (app.settings.alarmVolume / 100));
 	}
 }
 function updateSlider(value){
-	volume = value;
+	app.settings.alarmVolume = value;
 }
-function loadSettings(app){
+function toggleAlarm(value){
+    app.settings.alarmVibrate = value;
+}
+function loadSettings(){
 	if(typeof(Storage) != "undefined"){
-		if(localStorage.getItem("app") != null){
-			// Si es que hay opciones guardadas
+		if(localStorage.getItem("app") != null){                // Si es que hay opciones guardadas
 			app = JSON.parse(localStorage.getItem("app"));
-			return app;
-		}else{
-			// Es la primera vez que se ejecuta la aplicacion
+		}else{                                                 // Es la primera vez que se ejecuta la aplicacion
 			localStorage.setItem("app", JSON.stringify(app));
-			return app;
 		}
 	}else{
 		// No web Storage support
 	}
 }
-function saveAppState(app){
+function saveAppState(){
 	if(typeof(Storage) != "undefined"){
 		localStorage.setItem("app", JSON.stringify(app));
 	}
 }
-function loadAppState(app){
+function loadAppState(){
 	if(typeof(Storage) != "undefined"){
 		app = JSON.parse(localStorage.getItem("app"));
 	}

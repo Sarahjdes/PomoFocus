@@ -13,7 +13,6 @@
 	<div id="container">
 		<div id="player">
 			<div class="playerContainer">
-				<span id="mainScreenTitle">PomoFocus</span>
 				<i class="material-icons menuIcons" id="settingsBtn">settings</i>
 				<i class="material-icons menuIcons" id="addBtn">add</i>
 			</div>
@@ -71,11 +70,11 @@
 		<div class="viewBtn" id="alarmBtn">
 			<span class="headText">Tono de Alarma</span>
 			<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
-			<span class="subText">'Happy Song'</span>
+			<span class="subText">Alarm 1</span>
 		</div>
 		<div id="viewSlider">
 			<span class="headText">Volumen de Alarma</span><br>
-			<input type="range" min="0" max="100" id="volumeSlider" onchange="updateSlider(this.value)" oninput="updateSlider(this.value)">
+			<input type="range" min="0" max="100" id="volumeSlider" value="50" onchange="updateSlider(this.value)" oninput="updateSlider(this.value)">
 		</div>
 		<div id="viewCheckBox">
 			<span class="headText">Vibrar cuando suene la alarma</span>

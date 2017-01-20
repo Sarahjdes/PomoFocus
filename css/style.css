@@ -1,21 +1,72 @@
+@media only screen and (max-width: 356px) {
+    .material-icons {
+        font-size: 24px !important;
+    }
+    #time{
+        font-size: 60px !important;
+    }
+    .viewIcons{
+        font-size: 24px !important;
+    }
+    .subText{
+        font-size: 14px !important;
+    }
+    .taskText{
+        font-size: 14px !important;
+    }
+}
+@media (min-width: 357px) and (max-width: 991px)  {
+    .material-icons {
+        font-size: 48px !important;
+    }
+    #time{
+        font-size: 70px !important;
+    }
+    .viewIcons{
+        font-size: 48px !important;
+    }
+    .taskText{
+        font-size: 15px !important;
+    }
+    .subMenuTitle{
+        font-size: 17px !important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1027px)  {
+    .material-icons {
+        font-size: 72px !important;
+    }
+    #time{
+        font-size: 80px !important;
+    }
+    .viewIcons{
+        font-size: 72px !important;
+    }
+    .subText{
+        font-size: 16px !important;
+    }
+    .taskText{
+        font-size: 18px !important;
+    }
+}
 #mainContainer{
 	position: fixed;
 	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	top:0px;
-  left:0px;
+	top: 0;
+    left:0px;
 }
 #container{
 	margin: 0 auto;
 	top: 0;
-  left: 0;
+    left: 0;
 	position: absolute;
 	/*width: 300px !important;
 	height: 450px;*/
 	width: 100%;
-  height: 40%;
+    height: 40%;
 	text-align: center;
 	z-index: 1;
 }
@@ -31,19 +82,6 @@
 	width: 100% !important;
 	text-align: center;
 	z-index: 1;
-}
-#mainScreenTitle{
-	color: white;
-	position: absolute;
-	font-family: 'Roboto', sans-serif;
-	font-size: 18px;
-	font-weight: bold;
-	text-align: center;
-	right: 10px;
-	left: 10px;
-	top: 10px;
-	user-select: none;
-	cursor: default;
 }
 .customBtn{
 	cursor: pointer;
@@ -88,19 +126,17 @@
 #time{
 	color: white;
 	font-family: 'Roboto', sans-serif;
-	font-size: 60px;
 	margin-bottom: 30px !important;
 	user-select: none;
 	cursor: default;
 }
 .material-icons {
 	cursor: pointer;
-	font-size: 36px !important;
+	font-size: 36px;
 }
 .player-icons{
 	cursor: pointer;
 	color: white;
-	font-size: 48px !important;
 	user-select: none;
 }
 h1{
@@ -114,7 +150,6 @@ h1{
 	color: black;
 	user-select: none;
 	left: 5%;
-	top: 5%;
 	z-index: 3;
 }
 .viewBtn{
@@ -124,9 +159,11 @@ h1{
 	height: 55px;
 	margin-left: 3%;
 	border: 1px solid #c4c4c4;
-  border-radius: 8px;
+    border-radius: 8px;
 	margin-bottom: 8px;
 	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0,0,0, 0.0);
+    outline: none;
 }
 .viewTitle{
 	position: absolute;
@@ -135,16 +172,16 @@ h1{
 	font-family: 'Roboto', sans-serif;
 	font-size: 18px;
 	font-weight: bold;
-  left: 50%;
-	top: 40%;
-	transform: translateX(-50%) translateY(-40%);
+    left: 50%;
+	top: 50%;
+	transform: translateX(-50%);
 }
 .headText{
 	position: absolute;
 	font-family: 'Roboto', sans-serif;
 	color: black !important;
 	text-align: left;
-	font-size: 16px;
+	font-size: 16px !important;
 	left: 10px;
 	top: 14px;
 	cursor: pointer;
@@ -202,7 +239,8 @@ h1{
 	border-bottom: 1px solid rgba(194,194,194,.25);
 	position: relative;
 	width: 100%;
-	height: 40px;
+	height: 50px;
+	padding-top: 10%;
 	margin-bottom: 20px;
 	z-index: 3;
 }
@@ -211,17 +249,16 @@ h1{
 	width: 100%;
 	height: 40px;
 	margin-bottom: 20px;
+	padding-top: 10%;
 	z-index: 3;
 }
 #settingsBtn{
 	position: absolute;
-	left: 10px;
-	top: 5px;
+	left: 5%;
 }
 #addBtn{
 	position: absolute;
-	right: 10px;
-	top: 5px;
+	right: 5%;
 }
 #btnBox{
 	margin-top: 2px;
@@ -397,6 +434,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 input:focus,
 select:focus,
+div:focus,
 textarea:focus,
 button:focus {
     outline: none;

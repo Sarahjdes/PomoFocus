@@ -63,22 +63,20 @@
 	top: 0;
     left: 0;
 	position: absolute;
-	/*width: 300px !important;
-	height: 450px;*/
 	width: 100%;
     height: 40%;
 	text-align: center;
 	z-index: 1;
 }
 #player{
-	background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;
-	/*background: linear-gradient(#47c9a2 20%, #26A69A 100%) 100% no-repeat;  GREEN*/
-	/*background: linear-gradient(#546E7A 20%, #607D8B 100%) 100% no-repeat;  CLASSIC*/
-	/*background: linear-gradient(#2196F3 20%, #42A5F5  100%) 100% no-repeat; BLUE*/
-	/*background: linear-gradient(#f2746f 20%, #f59764  100%) 100% no-repeat; MAIN*/
-	/*background: linear-gradient(#E91E63 20%, #E91E63  100%) 100% no-repeat; PINK*/
-	/*box-shadow: 1px 5px 10px 4px rgba(0,0,0,0.21);*/
+	background: radial-gradient(ellipse farthest-corner at center, #47C9A2 0%, #26A69A 100%);
+	/*background: radial-gradient(ellipse farthest-corner at center, #607D8B 0%, #546E7A 100%);  CLASSIC*/
+	/*background: radial-gradient(ellipse farthest-corner at center, #42A5F5 0%, #2196F3 100%);  BLUE*/
+	/*background: radial-gradient(ellipse farthest-corner at center, #FF9D68 0%, #FF7A75 100%);  BRIGHT*/
+	/*background: radial-gradient(ellipse farthest-corner at center, #FC216B 0%, #E91E63 100%);  PINK*/
+	box-shadow: 1px 5px 10px 4px rgba(0,0,0,0.21);
 	margin: 0 auto;
+	opacity: 0.9;
 	width: 100% !important;
 	text-align: center;
 	z-index: 1;
@@ -100,6 +98,7 @@
 	margin-bottom: 8px;
 }
 #settingsBox{
+    transition: all 2s linear;
 	background: #fcfcfc;
 	margin: 0 auto;
 	top: 0;
@@ -231,10 +230,9 @@ h1{
 	margin-bottom: 20px;
 }
 #vibrarCheck{
-	position: absolute;
-	left: 240px;
-	top: 12px;
+
 }
+
 .headerContainer{
 	border-bottom: 1px solid rgba(194,194,194,.25);
 	position: relative;
@@ -411,17 +409,43 @@ h1{
 	opacity: 0.8;
 	position: fixed;
 	width: 100%;
-  height: 100%;
+    height: 100%;
 	top: 0;
-  left: 0;
+    left: 0;
 	margin: 0 auto;
 	z-index: 9;
+}
+input[type=checkbox] {
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+}
+
+input[type=checkbox]:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    right: 0px;
+    position: absolute;
+    display: inline-block;
+    background: #fff;
+	border: 1px solid #c4c4c4;
+    border-radius: 4px;
+}
+input[type=checkbox]:checked:after {
+    content: '✓';
+    font-size: 24px;
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    right: 0px;
 }
 input[type=range] {
 	-webkit-appearance: none;
 	height: 10px;
 	border: 1px solid #c4c4c4;
-  border-radius: 4px;
+    border-radius: 4px;
 	background-color: #fff;
 }
 input[type='range']::-webkit-slider-thumb {

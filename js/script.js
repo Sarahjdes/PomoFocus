@@ -5,7 +5,7 @@ var clock = {
 	"initSeconds" : 00,
 	"pomodoroFlag" : 0
 };
-var volume = 1.0;
+var volume = 50;
 var vibrar = true;
 window.onload = pageLoaded();
 
@@ -38,7 +38,7 @@ function pageLoaded(){
 			/* App settings */
 			"userTheme" : "Green",
 			"alarmSong" : "Happy Song",
-			"alarmVolume" : "70",
+			"alarmVolume" : "50",
 			"alarmVibrate" : "false"
 		},
 		"stats" : {
@@ -68,10 +68,13 @@ function pageLoaded(){
 			]
 		}
 	};
-    // LOAD SETTINGS
+    // Load user settings from localStorage
 	app = loadSettings(app);
+	// Update user settings, alarm song, volume, vibration on, etc
+    document.getElementById("volumeSlider").value = app.settings.alarmVolume;
 	updateUserSettings(app.settings);
-	updateApp(app);
+    // Update the user task list for today, user stats, etc
+    updateApp(app);
 
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
@@ -94,6 +97,7 @@ function pageLoaded(){
 	settingsBtn.onclick = function settingsPanel(){
 		// Shows the settings panel and waits for user input
 		var settingsObject = app.settings;
+		document.getElementById("volumeSlider").value = app.settings.alarmVolume;
 		settingsBox.style.display = 'block';
 		mainBox.style.display = 'none';
 		themeBtn.onclick = function showThemeSelection(){
@@ -142,16 +146,16 @@ function pageLoaded(){
                 	userSong = document.getElementById("userAlarmR4").value;
                 }
                 settingsObject.alarmSong = userSong;
-                updateUserSettings(settingsObject);
-                app.settings = settingsObject;
-                saveAppState(app);
                 shadowBox.style.display = 'none';
                 alarmBox.style.display = 'none';
 			};
 		};
-		backBtn.onclick = function updateUserSettings(){
+		backBtn.onclick = function saveUserSettings(){
 			// Saves the user settings
+			settingsObject.alarmVolume = volume;
+            document.getElementById("volumeSlider").value = volume;
 			app.settings = settingsObject;
+			updateUserSettings(app.settings);
 			saveAppState(app);
 			settingsBox.style.display = 'none';
 			mainBox.style.display = 'block';
@@ -223,7 +227,6 @@ function updateTime(){
 function updateUserSettings(settings){
     var theme = settings.userTheme;
     var alarm = settings.alarmSong;
-    var alarmVolume = settings.alarmVolume;
     var alarmVibrate = settings.alarmVibrate;
 	var player = document.getElementById("player");
 	var iconos = document.getElementsByClassName("settingsIcons");
@@ -309,7 +312,7 @@ function playAlarm(sound){
 	}
 }
 function updateSlider(value){
-	volume = value / 100;
+	volume = value;
 }
 function loadSettings(app){
 	if(typeof(Storage) != "undefined"){

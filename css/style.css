@@ -94,28 +94,27 @@
 	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
 	border: 1px solid #009688;
-  border-radius: 8px;
+    border-radius: 8px;
 	margin-bottom: 8px;
 }
 #settingsBox{
-    transition: all 2s linear;
 	background: #fcfcfc;
 	margin: 0 auto;
 	top: 0;
-  left: 0;
+    left: 0;
 	width: 100%;
 	height: auto;
-  display: none;
+    display: none;
 	z-index: 2;
 }
 #addNewTaskBox{
 	background: #fcfcfc;
 	margin: 0 auto;
 	top: 0;
-  left: 0;
+    left: 0;
 	width: 100%;
 	height: auto;
-  display: none;
+    display: none;
 	z-index: 2;
 }
 .menuIcons{
@@ -352,23 +351,28 @@ h1{
 	display: none;
 }
 .optionsBox{
-	display: none;
+	display: block;
 	background: white;
 	position: absolute;
-  left: 50%;
-	top: 10%;
-	transform: translateX(-50%) translateY(-10%);
 	margin: 0 auto;
 	margin-top: 20%;
 	font-family: 'Roboto', sans-serif;
 	width: 30%;
-  height: auto;
+    height: auto;
+    left: 50%;
+    top: 10%;
 	font-size: 20px;
 	max-width: 400px;
 	min-width: 220px;
 	border: 1px solid #c4c4c4;
-  border-radius: 8px;
+    opacity: 0;
 	z-index: 10;
+}
+.showAlert{
+    transform: translateX(-50%) translateY(-10%);
+    transition-timing-function: ease-in;
+	transition: 0.2s;
+    opacity: 1;
 }
 .themeBtn{
 	border-bottom: 1px solid #c4c4c4;

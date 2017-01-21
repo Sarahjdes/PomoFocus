@@ -49,7 +49,7 @@ function pageLoaded(){
     // Load user settings from localStorage and update the app object
 	loadSettings();
 	// Put the values in the actual dom
-  document.getElementById("volumeSlider").value = app.settings.alarmVolume;
+    document.getElementById("volumeSlider").value = app.settings.alarmVolume;
 	updateUserTheme();
     // Update the user task list for today, user stats, etc
     // updateApp();
@@ -71,6 +71,7 @@ function pageLoaded(){
 		themeBtn.onclick = showThemeSelection;
 		alarmBtn.onclick = showAlarmSelection;
 		backBtn.onclick = function saveUserSettings(){
+			// Saves the user settings
 			saveAppState();
 			settingsBox.style.display = 'none';
 			mainBox.style.display = 'block';
@@ -239,10 +240,10 @@ function showAlarmSelection(){
 	var saveAlarmBox = document.getElementById("saveAlarmBox");
 
 	shadowBox.style.display = 'block';
-	alarmBox.style.display = 'block';
+	alarmBox.classList.add("showAlert");
 	cancelAlarmBox.onclick = function cancel(){
 	    shadowBox.style.display = 'none';
-		alarmBox.style.display = 'none';
+	    alarmBox.classList.remove("showAlert");
 	};
 	saveAlarmBox.onclick = function save(){
 	    // save the user alarm sound
@@ -259,7 +260,7 @@ function showAlarmSelection(){
         app.settings.alarmSong = userSong;
         document.getElementById("selectedAlarm").innerHTML = app.settings.alarmSong;
         shadowBox.style.display = 'none';
-        alarmBox.style.display = 'none';
+        alarmBox.classList.remove("showAlert");
     };
 };
 function showThemeSelection(){
@@ -270,10 +271,10 @@ function showThemeSelection(){
 
     // mostrar la seleccion de tema
     shadowBox.style.display = 'block';
-    themeBox.style.display = 'block';
+    themeBox.classList.add("showAlert");
     cancelThemeBox.onclick = function cancel(){
         shadowBox.style.display = 'none';
-        themeBox.style.display = 'none';
+        themeBox.classList.remove("showAlert");
     };
     saveThemeBox.onclick = function save(){
         // save the user selected theme
@@ -292,7 +293,7 @@ function showThemeSelection(){
         app.settings.userTheme = userTheme;
         updateUserTheme();
         shadowBox.style.display = 'none';
-        themeBox.style.display = 'none';
+        themeBox.classList.remove("showAlert");
     };
 };
 function updateApp(){

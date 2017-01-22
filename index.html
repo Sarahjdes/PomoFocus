@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="fonts/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 <div id="mainContainer">
 	<div id="container">
@@ -16,41 +17,51 @@
 				<i class="material-icons menuIcons" id="addBtn">add</i>
 			</div>
 			<span id="time">25 : 00</span>
+			<div>
+				<!-- <span> o-o-o-o-o-o-o-o</span>-->
+			</div>
 			<div id="btnBox">
 				<i class="material-icons player-icons" id="startBtn">play_circle_outline</i>
 				<i class="material-icons player-icons" id="stopBtn">pause_circle_outline</i>
 				<i class="material-icons player-icons" id="resetBtn">stop</i><br>
 				<button type="button" class="customBtn">Short Break</button>
 				<button type="button" class="customBtn">Long Break</button>
-				<button type="button" class="customBtn" id="customBtn">Custom</button>
-			</div>
-			<div>
-				<!-- <span> o-o-o-o-o-o-o-o</span>-->
 			</div>
 		</div>
-		<div id="subMenu">
-			<div class="subMenuClass">
-				<span class="subMenuTitle">Hoy</span>
-			</div>
-			<div class="subMenuClass">
-				<span class="subMenuTitle">Estadisticas</span>
-			</div>
-			<div class="subMenuClass">
-				<span class="subMenuTitle">Historial</span>
-			</div>
+		<div id="currentTask">
 		</div>
 		<div id="tasks">
 			<div id="task1" class="task">
-				<span  class="taskText"><i class="fa fa-check-circle-o  taskState"></i> Estudiar Desarrollo de Apps </span>
-				<span class="taskTime">10:25</span>
+				<span  class="taskText"><i class="fa fa-check-circle-o fa-lg taskState"></i> Estudiar Desarrollo de Apps </span>
+				<i class="fa fa-ellipsis-v taskTime"></i>
+				<br><span class="subTask">10:25 - 10:40 - 15 minutes pomodoro</span>
 			</div>
 			<div id="task2" class="task">
-				<span class="taskText"><i class="fa fa-check-circle-o taskState"></i> Diseñar Mockups </span>
-				<span class="taskTime">10:25</span>
+				<span class="taskText"><i class="fa fa-check-circle-o fa-lg taskState"></i> Diseñar Mockups </span>
+				<i class="fa fa-ellipsis-v taskTime"></i>
+				<br><span class="subTask">10:25 - 10:40 - 15 minutes pomodoro</span>
 			</div>
 			<div id="task3" class="task">
-				<span class="taskText"><i class="fa fa-circle-o  taskState"></i> Trabajar en Presentación </span>
-				<span class="taskTime">10:25</span>
+				<span class="taskText"><i class="fa fa-circle-o fa-lg taskState"></i> Trabajar en Presentación </span>
+				<i class="fa fa-ellipsis-v taskTime"></i>
+				<br><span class="subTask">10:25 - 10:40 - 15 minutes pomodoro</span>
+			</div>
+		</div>
+		<div id="subMenu">
+			<div class="subMenuClass selectedSubMenu">
+				<i class="fa fa-home barSettingsIcons"></i>
+				<br>
+				<span class="subMenuTitle"> Tareas</span>
+			</div>
+			<div class="subMenuClass">
+				<i class="fa fa-bar-chart barSettingsIcons"></i>
+				<br>
+				<span class="subMenuTitle"> Estadisticas</span>
+			</div>
+			<div class="subMenuClass">
+				<i class="fa fa-book barSettingsIcons"></i>
+				<br>
+				<span class="subMenuTitle"> Historial</span>
 			</div>
 		</div>
 	</div>

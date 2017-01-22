@@ -66,15 +66,19 @@ function pageLoaded(){
 		document.getElementById("vibrarCheck").checked = JSON.parse(app.settings.alarmVibrate);
 		document.getElementById("selectedAlarm").innerHTML = app.settings.alarmSong;
 		// Show the settings view and hiddes the main view
-		settingsBox.style.display = 'block';
-		mainBox.style.display = 'none';
+		settingsBox.classList.add("showSettings");
+		mainBox.classList.add("hideContainer");
 		themeBtn.onclick = showThemeSelection;
 		alarmBtn.onclick = showAlarmSelection;
 		backBtn.onclick = function saveUserSettings(){
-			// Saves the user settings
+		    // Saves the user settings
 			saveAppState();
-			settingsBox.style.display = 'none';
-			mainBox.style.display = 'block';
+			settingsBox.classList.add("hideSettings");
+			mainBox.classList.remove("hideContainer");
+			mainBox.classList.add("showContainer");
+		    settingsBox.classList.remove("hideSettings");
+			mainBox.classList.remove("showContainer");
+		    settingsBox.classList.remove("showSettings");
 		};
 	};
 	customBtn.onclick = function showCustom(){

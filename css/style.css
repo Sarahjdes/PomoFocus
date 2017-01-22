@@ -68,18 +68,30 @@
 	text-align: center;
 	z-index: 1;
 }
+.hideContainer{
+	left: 150% !important;
+    transition: 0.2s;
+    transition-timing-function: ease-in;
+    transform: translateX(150%) translateY(0);
+}
+.showContainer{
+	left: 0 !important;
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+    transform: translateX(0) translateY(0);
+}
 #player{
+    position: relative;
 	background: radial-gradient(ellipse farthest-corner at center, #47C9A2 0%, #26A69A 100%);
 	/*background: radial-gradient(ellipse farthest-corner at center, #607D8B 0%, #546E7A 100%);  CLASSIC*/
 	/*background: radial-gradient(ellipse farthest-corner at center, #42A5F5 0%, #2196F3 100%);  BLUE*/
 	/*background: radial-gradient(ellipse farthest-corner at center, #FF9D68 0%, #FF7A75 100%);  BRIGHT*/
 	/*background: radial-gradient(ellipse farthest-corner at center, #FC216B 0%, #E91E63 100%);  PINK*/
-	box-shadow: 1px 5px 10px 4px rgba(0,0,0,0.21);
 	margin: 0 auto;
-	opacity: 0.9;
+	/*opacity: 0.9;*/
 	width: 100% !important;
 	text-align: center;
-	z-index: 1;
+	z-index: 5;
 }
 .customBtn{
 	cursor: pointer;
@@ -98,14 +110,28 @@
 	margin-bottom: 8px;
 }
 #settingsBox{
+    position: absolute;
 	background: #fcfcfc;
 	margin: 0 auto;
 	top: 0;
-    left: 0;
+	left: -100%;
 	width: 100%;
 	height: auto;
-    display: none;
 	z-index: 2;
+}
+.showSettings{
+    transition-property: left;
+    left: 0!important;
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+    transform: translateX(0) translateY(0);
+}
+.hideSettings{
+    transition-property: left;
+    left: -100%!important;
+    transition: 0.4s;
+    transition-timing-function: ease-in;
+    transform: translateX(-100%) translateY(0);
 }
 #addNewTaskBox{
 	background: #fcfcfc;
@@ -198,13 +224,17 @@ h1{
 }
 .settingsIcons{
 	position: absolute;
-	/*color: #E91E63;*/
 	color: #47c9a2;
 	cursor: pointer;
 	font-size: 24px !important;
 	right: 10px;
 	top: 14px;
 	user-select: none;
+}
+.barSettingsIcons{
+    color: grey;
+    position: static !important;
+    font-size: 30px !important;
 }
 #viewSlider{
 	position: relative;
@@ -231,7 +261,6 @@ h1{
 #vibrarCheck{
 
 }
-
 .headerContainer{
 	border-bottom: 1px solid rgba(194,194,194,.25);
 	position: relative;
@@ -265,15 +294,16 @@ h1{
 	width: 100%;
 	height: auto;
 	background: #ffffff;
-	padding-top: 5px;
+	margin-top: 5px;
 }
 .task{
 	width: 100%;
+	/*border-bottom: 1px solid rgba(194,194,194,.09);*/
 	background: #ffffff;
 	padding-left: 5%;
-	padding-top: 5px;
+	padding-top: 5%;
 	text-align: left;
-	height: 30px;
+	height: 40px;
 }
 .taskState{
 	user-select: none;
@@ -284,7 +314,6 @@ h1{
 	font-family: 'Roboto', sans-serif;
 	right: 5%;
 	color: rgba(0,0,0,0.4);
-	font-size: 12px;
 	text-align: right;
 }
 .taskText{
@@ -293,6 +322,31 @@ h1{
 	font-size: 14px;
 	user-select: none;
 	cursor: default;
+}
+.subTask{
+	position: absolute;
+	font-family: 'Roboto', sans-serif;
+	color: rgba(0,0,0,0.4);
+	text-align: left;
+	font-size: 11px;
+    padding-left: 5%;
+    padding-top: 2px;
+    text-align: left;
+	cursor: pointer;
+	user-select: none;
+}
+#currentTask{
+	position: relative;
+	background: #fcfcfc;
+	width: 100%;
+	height: auto;
+	min-height: 25px;
+	padding-top: 2%;
+	padding-left: 2%;
+	text-align: left !important;
+    cursor: pointer;
+    z-index: 3;
+    border: 1px solid rgba(194,194,194,.20);
 }
 .addTaskForm{
 	border-bottom: 1px solid rgba(194,194,194,.25);
@@ -309,7 +363,7 @@ h1{
 	width: 100%;
 	height: 25px;
 	border: 1px solid #c4c4c4;
-  border-radius: 4px;
+    border-radius: 4px;
 	background-color: #fff;
 }
 .addTaskText{
@@ -317,26 +371,32 @@ h1{
 	top: 0px;
 }
 #subMenu{
-	position: relative;
-	background: #ffffff;
+	border-top: 1px solid rgba(194,194,194,.20);
+	/*position: relative;*/
+	position: fixed;
 	width: 100%;
-	height: 40px;
+	height: auto;
+	bottom: 42px;
+	min-height: 55px;
 	z-index: 3;
 }
 .subMenuClass{
 	position: relative;
 	background: #fcfcfc;
-	padding-top: 10px;
-	border-bottom: 1px solid rgba(194,194,194,.25);
+	padding-top: 3%;
 	float: left;
 	width: 33.3%;
-	height: 30px;
+    height: 10%;
+	min-height: 55px;
 }
 .subMenuTitle{
 	font-family: 'Roboto', sans-serif;
 	cursor: pointer;
 	color: black !important;
 	font-size: 15px;
+}
+.selectedSubMenu{
+    border-top: 2px solid #47C9A2;
 }
 .userMinutes{
 	width: 30px;
@@ -354,13 +414,13 @@ h1{
 	display: block;
 	background: white;
 	position: absolute;
+    left: 50%;
+    top: 100%;
 	margin: 0 auto;
 	margin-top: 20%;
 	font-family: 'Roboto', sans-serif;
 	width: 30%;
     height: auto;
-    left: 50%;
-    top: 10%;
 	font-size: 20px;
 	max-width: 400px;
 	min-width: 220px;
@@ -368,11 +428,17 @@ h1{
     opacity: 0;
 	z-index: 10;
 }
+@keyframes showAlert {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
 .showAlert{
-    transform: translateX(-50%) translateY(-10%);
-    transition-timing-function: ease-in;
-	transition: 0.2s;
     opacity: 1;
+    top: 10%;
+    transform: translateX(-50%) translateY(-10%);
+    /*transition: 0.25s;
+    transition-timing-function: ease-out;*/
+    animation: showAlert 0.2s linear;
 }
 .themeBtn{
 	border-bottom: 1px solid #c4c4c4;

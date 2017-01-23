@@ -132,22 +132,19 @@ function decreaseTime(){
 }
 function addNewTask(){
     // Shows the add new task menu and waits for user input
-    var addNewTaskBox = document.getElementById("addNewTaskBox");
-    var addNewTaskBtn = document.getElementById("addNewTaskBtn");
-	var mainBox = document.getElementById("container");
+	var addNewTaskBox = document.getElementById("addNewTaskBox");
+  var addNewTaskBtn = document.getElementById("addNewTaskBtn");
 	var cancelBtn = document.getElementById("cancelAddBtn");
-
-    addNewTaskBox.style.display = 'block';
-    mainBox.style.display = 'none';
-    addNewTaskBtn.onclick = function goBack(){
+	
+	addNewTaskBox.classList.add("showAlert");
+  addNewTaskBtn.onclick = function goBack(){
         // Hides the add menu and shows the main screen
         addNewTaskBox.style.display = 'none';
         mainBox.style.display = 'block';
         // add the new task to the app object, then save the app state
     };
     cancelBtn.onclick = function goBack(){
-        addNewTaskBox.style.display = 'none';
-        mainBox.style.display = 'block';
+			addNewTaskBox.classList.remove("showAlert");
     };
 }
 function updateTime(){

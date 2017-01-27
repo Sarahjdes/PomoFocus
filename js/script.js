@@ -81,10 +81,10 @@ function pageLoaded(){
 		    settingsBox.classList.remove("showSettings");
 		};
 	};
-	customBtn.onclick = function showCustom(){
+	/*customBtn.onclick = function showCustom(){
 		customBox.style.display = 'block';
 		backCustom.onclick = updateTime;
-	};
+	};*/
 }
 function startPomodoro(){
 	// This function will start a new pomodoro once the start or reset buttons have been clicked.
@@ -132,19 +132,22 @@ function decreaseTime(){
 }
 function addNewTask(){
     // Shows the add new task menu and waits for user input
-	var addNewTaskBox = document.getElementById("addNewTaskBox");
-  var addNewTaskBtn = document.getElementById("addNewTaskBtn");
+    var addNewTaskBox = document.getElementById("addNewTaskBox");
+    var addNewTaskBtn = document.getElementById("addNewTaskBtn");
+	var mainBox = document.getElementById("container");
 	var cancelBtn = document.getElementById("cancelAddBtn");
-	
-	addNewTaskBox.classList.add("showAlert");
-  addNewTaskBtn.onclick = function goBack(){
-        // Hides the add menu and shows the main screen
-        addNewTaskBox.style.display = 'none';
-        mainBox.style.display = 'block';
+
+    shadowBox.style.display = 'block';
+    addNewTaskBox.classList.add("showNewTask");
+    addNewTaskBtn.onclick = function goBack(){
+        addNewTaskBox.classList.remove("showNewTask");
+        shadowBox.style.display = 'none';
         // add the new task to the app object, then save the app state
+
     };
     cancelBtn.onclick = function goBack(){
-			addNewTaskBox.classList.remove("showAlert");
+        addNewTaskBox.classList.remove("showNewTask");
+        shadowBox.style.display = 'none';
     };
 }
 function updateTime(){
@@ -233,6 +236,9 @@ function updateAlarmCheckBox(){
     }else if(alarm == document.getElementById("userAlarmR4").value){
         document.getElementById("userAlarmR4").checked = true;
     }
+}
+function updateNewPomo(value, id){
+    document.getElementById(id).innerHTML = value + " min";
 }
 function showAlarmSelection(){
 	var shadowBox = document.getElementById("shadowBox");

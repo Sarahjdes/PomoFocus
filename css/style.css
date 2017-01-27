@@ -70,14 +70,16 @@
 }
 .hideContainer{
 	left: 150% !important;
-    transition: 0.2s;
-    transition-timing-function: ease-in;
+   /* transition: 0.2s;
+    transition-timing-function: ease-in;*/
+    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
     transform: translateX(150%) translateY(0);
 }
 .showContainer{
 	left: 0 !important;
-    transition: 0.2s;
-    transition-timing-function: ease-out;
+    /*transition: 0.2s;
+    transition-timing-function: ease-out;*/
+    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
     transform: translateX(0) translateY(0);
 }
 #player{
@@ -122,26 +124,27 @@
 .showSettings{
     transition-property: left;
     left: 0!important;
-    transition: 0.2s;
-    transition-timing-function: ease-out;
+    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    /*transition: 0.2s;
+    transition-timing-function: ease-out;*/
     transform: translateX(0) translateY(0);
 }
 .hideSettings{
     transition-property: left;
     left: -100%!important;
-    transition: 0.4s;
-    transition-timing-function: ease-in;
+    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    /*transition: 0.4s;
+    transition-timing-function: ease-in;*/
     transform: translateX(-100%) translateY(0);
 }
 #addNewTaskBox{
+    position: relative;
 	background: #fcfcfc;
-	margin: 0 auto;
-	top: 0;
-    	left: 0;
+    left: 100%;
 	width: 80%;
 	height: auto;
-	z-index: 2;
 	opacity: 0;
+	z-index: 10;
 }
 .menuIcons{
 	color: white;
@@ -315,6 +318,7 @@ h1{
 	right: 5%;
 	color: rgba(0,0,0,0.4);
 	text-align: right;
+	padding-top: 2.5%;
 }
 .taskText{
 	font-family: 'Roboto', sans-serif;
@@ -334,19 +338,6 @@ h1{
     text-align: left;
 	cursor: pointer;
 	user-select: none;
-}
-#currentTask{
-	position: relative;
-	background: #fcfcfc;
-	width: 100%;
-	height: auto;
-	min-height: 25px;
-	padding-top: 2%;
-	padding-left: 2%;
-	text-align: left !important;
-    cursor: pointer;
-    z-index: 3;
-    border: 1px solid rgba(194,194,194,.20);
 }
 .addTaskForm{
 	border-bottom: 1px solid rgba(194,194,194,.25);
@@ -370,8 +361,24 @@ h1{
 	font-size: 18;
 	top: 0px;
 }
+#addTaskSliders{
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    color: black !important;
+    text-align: left;
+    font-size: 16px !important;
+    left: 10px;
+    top: 14px;
+    cursor: pointer;
+    user-select: none;
+
+}
+.dayTimeSelection{
+    display: inline-block;
+    background-color: blue;
+    color: white;
+}
 #subMenu{
-	border-top: 1px solid rgba(194,194,194,.20);
 	/*position: relative;*/
 	position: fixed;
 	width: 100%;
@@ -381,9 +388,10 @@ h1{
 	z-index: 3;
 }
 .subMenuClass{
+	border-top: 1px solid rgba(194,194,194,.20);
 	position: relative;
 	background: #fcfcfc;
-	padding-top: 3%;
+	padding-top: 2%;
 	float: left;
 	width: 33.3%;
     height: 10%;
@@ -396,7 +404,13 @@ h1{
 	font-size: 15px;
 }
 .selectedSubMenu{
-    border-top: 2px solid #47C9A2;
+    padding: 0;
+    margin: 0;
+    border-radius: 0px;
+    position: relative;
+    width: 33.3%;
+    max-height: 2px;
+    height: 2px;
 }
 .userMinutes{
 	width: 30px;
@@ -439,6 +453,12 @@ h1{
     /*transition: 0.25s;
     transition-timing-function: ease-out;*/
     animation: showAlert 0.2s linear;
+}
+.showNewTask{
+    opacity: 1 !important;
+    transform: translateX(-90vw) translateY(10vh);
+    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    /*animation: showNewTask 0.2s ease-out;*/
 }
 .themeBtn{
 	border-bottom: 1px solid #c4c4c4;

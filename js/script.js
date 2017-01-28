@@ -37,6 +37,9 @@ function pageLoaded(){
 	var shadowBox = document.getElementById("shadowBox");
 	var themeBtn = document.getElementById("themeBtn");
 	var alarmBtn = document.getElementById("alarmBtn");
+	var history = document.getElementById("history");
+	var historyBtn = document.getElementById("historyBtn");
+	var tasks = document.getElementById("tasks");
 
     // Load user settings from localStorage and update the app object
 	loadSettings();
@@ -44,11 +47,15 @@ function pageLoaded(){
     document.getElementById("volumeSlider").value = app.settings.alarmVolume;
 	updateUserTheme();
     // Update the user task list for today, user stats, etc
-    // updateApp();
+    updatePomodoros();
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
 	addBtn.onclick = addNewTask;
+	historyBtn.onclick = function(){
+	    tasks.classList.add("hideContainer");
+	    history.classList.add("showSettings");
+	};
 
 	settingsBtn.onclick = function showSettingsPanel(){
 		// Shows the settings panel and waits for user input
@@ -294,8 +301,16 @@ function showThemeSelection(){
         themeBox.classList.remove("showAlert");
     };
 };
-function updateApp(){
+function updatePomodoros(){
 	// Updates the user settings and task list
+	var date = new Date();
+	var day = date.getDate();
+	var dayOfWeek = date.getDay();
+	var month = date.getMonth();
+	var year = date.getFullYear();
+}
+function createTaskElement(){
+
 }
 function playAlarmClock(){
 	var userAlarm;

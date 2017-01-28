@@ -15,17 +15,24 @@ var app = {
     "stats" : {
         "finishedPomos" : "0",
         "success": "0",
-        "failed": "0",
-        "pomodoros" : [
-            {
-                "pomodoro" : {
-                    "date" : "27/03/2017",
-                    "duration" : "25",
-                    "state": "none"
-                }
+        "failed": "0"
+    },
+    "pomodoros" : [
+        {
+            "id" : {
+                "date" : "27/03/2017",
+                "duration" : "25",
+                "state": "none"
             }
-        ]
-    }
+        },
+        {
+            "id2" : {
+                "date" : "17/02/1993",
+                "duration" : "25",
+                "state": "none"
+            }
+        }
+    ]
 };
 
 window.onload = pageLoaded();
@@ -53,7 +60,7 @@ function pageLoaded(){
 	updateUserTheme();
     // Update the user task list for today, user stats, etc
     // updateApp();
-
+    console.log(app.pomodoros);
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;

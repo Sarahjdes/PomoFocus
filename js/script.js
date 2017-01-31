@@ -74,9 +74,9 @@ function pageLoaded(){
 			settingsBox.classList.add("hideSettings");
 			mainBox.classList.remove("hideContainer");
 			mainBox.classList.add("showContainer");
-		    settingsBox.classList.remove("hideSettings");
+		  settingsBox.classList.remove("hideSettings");
 			mainBox.classList.remove("showContainer");
-		    settingsBox.classList.remove("showSettings");
+		  settingsBox.classList.remove("showSettings");
 		};
 	};
 	/*customBtn.onclick = function showCustom(){
@@ -84,6 +84,7 @@ function pageLoaded(){
 		backCustom.onclick = updateTime;
 	};*/
 }
+
 function startPomodoro(){
 	// This function will start a new pomodoro once the start or reset buttons have been clicked.
 	if(clock.pomodoroFlag  == 0){
@@ -91,11 +92,13 @@ function startPomodoro(){
 		clock.pomodoroFlag = setInterval(decreaseTime, 1000);
 	}
 }
+
 function stopPomodoro(){
 	// Stop the pomodoro clock from decreasing time
 	clearInterval(clock.pomodoroFlag);
 	clock.pomodoroFlag = 0;
 }
+
 function resetPomodoro(){
 	var timeShown = document.getElementById("time");
 	stopPomodoro();
@@ -105,6 +108,7 @@ function resetPomodoro(){
 	timeShown.innerHTML =clock.minutes + " : 00";
 	startPomodoro();
 }
+
 function decreaseTime(){
 	// This function is called every second after a pomodoro is started
 	var timeShown = document.getElementById("time");
@@ -128,6 +132,7 @@ function decreaseTime(){
 		timeShown.innerHTML = clock.minutes + " : " + clock.seconds;
 	}
 }
+
 function addNewTask(){
     // Shows the add new task menu and waits for user input
     var addNewTaskBox = document.getElementById("addNewTaskBox");
@@ -148,6 +153,7 @@ function addNewTask(){
         shadowBox.style.display = 'none';
     };
 }
+
 function updateTime(){
 	// Sets the time and initial time variables as the number entered by the user
 	var customBox = document.getElementById("customizeTimeBox");
@@ -162,8 +168,9 @@ function updateTime(){
 	timeShown.innerHTML = clock.minutes + " : " + clock.seconds;
 	customBox.style.display = 'none';
 }
+
 function updateUserTheme(){
-    var theme = app.settings.userTheme;
+  var theme = app.settings.userTheme;
 	var player = document.getElementById("player");
 	var iconos = document.getElementsByClassName("settingsIcons");
 	var btn = document.getElementsByClassName("customBtn");
@@ -222,6 +229,7 @@ function updateUserTheme(){
         }
     }
 }
+
 function updateAlarmCheckBox(){
 	// Update user alarm song
 	alarm = app.settings.alarmSong;
@@ -235,9 +243,11 @@ function updateAlarmCheckBox(){
         document.getElementById("userAlarmR4").checked = true;
     }
 }
+
 function updateNewPomo(value, id){
     document.getElementById(id).innerHTML = value + " min";
 }
+
 function showAlarmSelection(){
 	var shadowBox = document.getElementById("shadowBox");
 	var alarmBox = document.getElementById("alarmBox");
@@ -268,6 +278,7 @@ function showAlarmSelection(){
         alarmBox.classList.remove("showAlert");
     };
 };
+
 function showThemeSelection(){
 	var shadowBox = document.getElementById("shadowBox");
 	var themeBox = document.getElementById("userThemeBox");
@@ -301,6 +312,7 @@ function showThemeSelection(){
         themeBox.classList.remove("showAlert");
     };
 };
+
 function updatePomodoros(){
 	// Updates the user settings and task list
 	var date = new Date();
@@ -308,10 +320,17 @@ function updatePomodoros(){
 	var dayOfWeek = date.getDay();
 	var month = date.getMonth();
 	var year = date.getFullYear();
+    // objetivo: guardar la informacion del objeto pomodoro en el dom
+    // En la pestaña de tareas se muestran solo las tareas de hoy
+    // En la pestaña historial se muestran todas las tareas del objeto
+
+	console.log(dayOfWeek, day, month, year);
 }
+
 function createTaskElement(){
 
 }
+
 function playAlarmClock(){
 	var userAlarm;
 	if(document.getElementById("userAlarmR1").checked){  		// Alarm = Alarm1
@@ -325,17 +344,21 @@ function playAlarmClock(){
 	}
 	playAlarm(userAlarm);
 }
+
 function playAlarm(alarm){
 	if(alarm != 0){
         Android.playSound(alarm, (app.settings.alarmVolume / 100));
 	}
 }
+
 function updateSlider(value){
 	app.settings.alarmVolume = value;
 }
+
 function toggleAlarm(value){
     app.settings.alarmVibrate = value;
 }
+
 function loadSettings(){
 	if(typeof(Storage) != "undefined"){
 		if(localStorage.getItem("app") != null){                // Si es que hay opciones guardadas
@@ -347,11 +370,13 @@ function loadSettings(){
 		// No web Storage support
 	}
 }
+
 function saveAppState(){
 	if(typeof(Storage) != "undefined"){
 		localStorage.setItem("app", JSON.stringify(app));
 	}
 }
+
 function loadAppState(){
 	if(typeof(Storage) != "undefined"){
 		app = JSON.parse(localStorage.getItem("app"));

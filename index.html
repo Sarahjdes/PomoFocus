@@ -9,7 +9,6 @@
 </head>
 
 <body>
-<div id="mainContainer">
 	<div id="container">
 		<div id="player">
 			<div class="playerContainer">
@@ -65,13 +64,17 @@
 			</div>
 		</div>
 	</div>
+
 	<!-- SETTINGS BOX -->
 	<div id="settingsBox">
+		<!-- Settings Header -->
 		<div class="headerContainer">
-			<i class="fa fa-arrow-left fa-2x viewIcons" id="backBtn"></i>
-			<span class="viewTitle">Settings</span>
+			<i class="fa fa-arrow-right fa-2x viewIcons" id="backBtn"></i>
+			<div class="settingsTitle">
+				<span>Settings</span>
+			</div>
 		</div>
-
+		<!-- Settings Buttons -->
 		<div class="viewBtn" id="themeBtn">
 			<span class="headText">Cambiar Estilo</span>
 			<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
@@ -97,9 +100,12 @@
 	</div>
 
 	<!-- NEW TASK BOX -->
-	<div id="addNewTaskBox">
-		<div id="newTaskTitle">
-			<span>Add New Task</span>
+	<div id="newTaskBox">
+		<div class="headerContainer">
+			<i class="fa fa-arrow-left fa-2x viewIcons" id="cancelAddBtn"></i>
+			<div class="settingsTitle">
+				<span>Add New Task</span>
+			</div>
 		</div>
 		<div class="addTaskForm">
 			<br>
@@ -123,7 +129,6 @@
 			<input type="radio" class="dayTimeSelection" value="pm" name="amPmSelection">
 		</div>
 		<div class="endThemeBtn">
-			<button type="button" id="cancelAddBtn">Cancel</button>
 			<button type="button" class="menuButton" id="addNewTaskBtn">Add</button>
 		</div>
 	</div>
@@ -160,6 +165,7 @@
 			</div>
 		</form>
 	</div>
+
 	<div class="optionsBox" id="userThemeBox">
 		<form>
 			<div class="themeBtn">
@@ -184,6 +190,5 @@
 		</form>
 	</div>
 	<div id="shadowBox"></div>
-</div>
-<script src="js/index.js"></script>
+	<script src="js/index.js"></script>
 </body>

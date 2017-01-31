@@ -45,6 +45,7 @@
 				<br><span class="subTask">10:25 - 10:40 - 15 minutes pomodoro</span>
 			</div>
 		</div>
+		<div id="history"></div>
 		<div id="subMenu">
 			<div class="customBtn selectedSubMenu"></div>
 			<div class="subMenuClass">
@@ -60,7 +61,7 @@
 			<div class="subMenuClass">
 				<i class="fa fa-book barSettingsIcons"></i>
 				<br>
-				<span class="subMenuTitle"> Historial</span>
+				<span class="subMenuTitle" id="historyBtn"> Historial</span>
 			</div>
 		</div>
 	</div>
@@ -97,38 +98,34 @@
 
 	<!-- NEW TASK BOX -->
 	<div id="addNewTaskBox">
-		<div class="headerContainer">
-			<i class="fa fa-arrow-left fa-2x viewIcons" id="cancelAddBtn"></i>
-			<span class="viewTitle">Add New Task</span>
+		<div id="newTaskTitle">
+			<span>Add New Task</span>
 		</div>
 		<div class="addTaskForm">
-			<span class="headText addTaskText">Task Name</span><br>
-			<input id="taskName" type="text">
+			<br>
+			<input id="taskName" type="text" placeholder="  Add task name"><br>
+			<span class="addTaskText">Start Time</span><br>
+			<input type="number" class="text userMinutes" value="10">:<input type="number" class="text userSeconds" value="30">
+		</div>
+		<div id="addTaskSliders">
+			<span class="addTaskText">Largo del Pomodoro</span><br>
+			<input type="range" min="0" max="60" id="pomoLength" class="newTaskSlider" value="25" onchange="updateNewPomo(this.value, 'pomoLengthText')"><span id="pomoLengthText">25 min</span><br>
+			<span class="addTaskText">Largo del descanso corto</span><br>
+			<input type="range" min="0" max="60" id="shortPomoLength" class="newTaskSlider" value="5" onchange="updateNewPomo(this.value, 'shortPomoLengthText')"><span id="shortPomoLengthText">5 min</span><br>
+			<span class="addTaskText">Largo del descanso largo</span><br>
+			<input type="range" min="0" max="60" id="longPomoLength" class="newTaskSlider" value="15" onchange="updateNewPomo(this.value, 'longPomoLengthText')"><span id="longPomoLengthText">15 min</span><br>
+		</div>
+		<div>
+			<!-- repetir pomodoro: diario, semanal o mensualmente -->
 		</div>
 		<div>
 			<input type="radio" class="dayTimeSelection" value="am" name="amPmSelection" checked>
 			<input type="radio" class="dayTimeSelection" value="pm" name="amPmSelection">
 		</div>
-		<div id="addTaskSliders">
-			<span>Largo del Pomodoro</span><br>
-			<input type="range" min="0" max="100" id="pomoLength" value="25" onchange="updateNewPomo(this.value, 'pomoLengthText')"><span id="pomoLengthText"></span><br>
-			<span>Largo del descanso corto</span><br>
-			<input type="range" min="0" max="100" id="shortPomoLength" value="5" onchange="updateNewPomo(this.value, 'shortPomoLengthText')"><span id="shortPomoLengthText"></span><br>
-			<span>Largo del descanso largo</span><br>
-			<input type="range" min="0" max="100" id="longPomoLength" value="15" onchange="updateNewPomo(this.value, 'longPomoLengthText')"><span id="longPomoLengthText"></span><br>
+		<div class="endThemeBtn">
+			<button type="button" id="cancelAddBtn">Cancel</button>
+			<button type="button" class="menuButton" id="addNewTaskBtn">Add</button>
 		</div>
-		<div>
-			// repetir pomodoro: diario, semanal o mensualmente
-		</div>
-		<div class="addTaskForm">
-			<span class="headText addTaskText">Start Time</span><br>
-			<input type="number" class="text userMinutes" value="10">:<input type="number" class="text userSeconds" value="30">
-		</div>
-		<div>
-			<input type="checkbox">
-			<span> Add notification?</span>
-		</div>
-		<button type="button" class="menuButton" id="addNewTaskBtn">Add Task</button>
 	</div>
 
 	<div id="customizeTimeBox">

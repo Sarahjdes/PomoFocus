@@ -51,12 +51,30 @@ function pageLoaded(){
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
-	addBtn.onclick = addNewTask;
 	historyBtn.onclick = function(){
 	    tasks.classList.add("hideContainer");
 	    history.classList.add("showSettings");
 	};
 
+	addBtn.onclick = function addNewTask(){
+		// Shows the add new task menu and waits for user input
+		var addNewTaskBox = document.getElementById("newTaskBox");
+		var addNewTaskBtn = document.getElementById("addNewTaskBtn");
+		var cancelBtn = document.getElementById("cancelAddBtn");
+
+		addNewTaskBox.classList.add("showNewTask");
+		mainBox.classList.add("hideMainLeft");
+		addNewTaskBtn.onclick = function goBack(){
+			addNewTaskBox.classList.remove("showNewTask");
+					mainBox.classList.remove("hideMainLeft");
+		  // add the new task to the app object, then save the app state
+
+		};
+		cancelBtn.onclick = function goBack(){
+			addNewTaskBox.classList.remove("showNewTask");
+			mainBox.classList.remove("hideMainLeft");
+		};
+	};
 	settingsBtn.onclick = function showSettingsPanel(){
 		// Shows the settings panel and waits for user input
 		updateAlarmCheckBox();
@@ -65,17 +83,13 @@ function pageLoaded(){
 		document.getElementById("selectedAlarm").innerHTML = app.settings.alarmSong;
 		// Show the settings view and hiddes the main view
 		settingsBox.classList.add("showSettings");
-		mainBox.classList.add("hideContainer");
+		mainBox.classList.add("hideMainRight");
 		themeBtn.onclick = showThemeSelection;
 		alarmBtn.onclick = showAlarmSelection;
 		backBtn.onclick = function saveUserSettings(){
 		    // Saves the user settings
 			saveAppState();
-			settingsBox.classList.add("hideSettings");
-			mainBox.classList.remove("hideContainer");
-			mainBox.classList.add("showContainer");
-		  settingsBox.classList.remove("hideSettings");
-			mainBox.classList.remove("showContainer");
+			mainBox.classList.remove("hideMainRight");
 		  settingsBox.classList.remove("showSettings");
 		};
 	};
@@ -131,27 +145,6 @@ function decreaseTime(){
 	}else{
 		timeShown.innerHTML = clock.minutes + " : " + clock.seconds;
 	}
-}
-
-function addNewTask(){
-    // Shows the add new task menu and waits for user input
-    var addNewTaskBox = document.getElementById("addNewTaskBox");
-    var addNewTaskBtn = document.getElementById("addNewTaskBtn");
-	var mainBox = document.getElementById("container");
-	var cancelBtn = document.getElementById("cancelAddBtn");
-
-    shadowBox.style.display = 'block';
-    addNewTaskBox.classList.add("showNewTask");
-    addNewTaskBtn.onclick = function goBack(){
-        addNewTaskBox.classList.remove("showNewTask");
-        shadowBox.style.display = 'none';
-        // add the new task to the app object, then save the app state
-
-    };
-    cancelBtn.onclick = function goBack(){
-        addNewTaskBox.classList.remove("showNewTask");
-        shadowBox.style.display = 'none';
-    };
 }
 
 function updateTime(){
@@ -254,10 +247,12 @@ function showAlarmSelection(){
 	var cancelAlarmBox = document.getElementById("cancelAlarmBox");
 	var saveAlarmBox = document.getElementById("saveAlarmBox");
 
-	shadowBox.style.display = 'block';
+	shadowBox.style.pointerEvents = 'auto';
+	shadowBox.classList.add("showShadowBox");
 	alarmBox.classList.add("showAlert");
 	cancelAlarmBox.onclick = function cancel(){
-	    shadowBox.style.display = 'none';
+			shadowBox.style.pointerEvents = 'none';
+			shadowBox.classList.remove("showShadowBox");
 	    alarmBox.classList.remove("showAlert");
 	};
 	saveAlarmBox.onclick = function save(){
@@ -274,7 +269,8 @@ function showAlarmSelection(){
         }
         app.settings.alarmSong = userSong;
         document.getElementById("selectedAlarm").innerHTML = app.settings.alarmSong;
-        shadowBox.style.display = 'none';
+				shadowBox.style.pointerEvents = 'none';
+				shadowBox.classList.remove("showShadowBox");
         alarmBox.classList.remove("showAlert");
     };
 };
@@ -286,10 +282,12 @@ function showThemeSelection(){
 	var saveThemeBox = document.getElementById("saveThemeBox");
 
     // mostrar la seleccion de tema
-    shadowBox.style.display = 'block';
+    shadowBox.style.pointerEvents = 'auto';
+		shadowBox.classList.add("showShadowBox");
     themeBox.classList.add("showAlert");
     cancelThemeBox.onclick = function cancel(){
-        shadowBox.style.display = 'none';
+				shadowBox.style.pointerEvents = 'none';
+				shadowBox.classList.remove("showShadowBox");
         themeBox.classList.remove("showAlert");
     };
     saveThemeBox.onclick = function save(){
@@ -308,7 +306,8 @@ function showThemeSelection(){
         }
         app.settings.userTheme = userTheme;
         updateUserTheme();
-        shadowBox.style.display = 'none';
+				shadowBox.style.pointerEvents = 'none';
+				shadowBox.classList.remove("showShadowBox");
         themeBox.classList.remove("showAlert");
     };
 };

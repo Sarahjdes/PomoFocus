@@ -56,34 +56,32 @@
 	margin: 0;
 	padding: 0;
 	top: 0;
-    left:0px;
+  left:0px;
 }
 #container{
 	margin: 0 auto;
 	top: 0;
-    left: 0;
+  left: 0;
 	position: absolute;
 	width: 100%;
-    height: 40%;
+  height: 40%;
 	text-align: center;
 	z-index: 1;
 }
 .hideContainer{
-	left: 150% !important;
-   /* transition: 0.2s;
-    transition-timing-function: ease-in;*/
-    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    transform: translateX(150%) translateY(0);
+  left: 150% !important;
+  transition: 300ms;
+  transition-timing-function: ease-in;
+  transform: translateX(150%) translateY(0);
 }
 .showContainer{
 	left: 0 !important;
-    /*transition: 0.2s;
-    transition-timing-function: ease-out;*/
-    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    transform: translateX(0) translateY(0);
+  transition: 300ms;
+  transition-timing-function: ease-out;
+  transform: translateX(0) translateY(0);
 }
 #player{
-    position: relative;
+  position: relative;
 	background: radial-gradient(ellipse farthest-corner at center, #47C9A2 0%, #26A69A 100%);
 	/*background: radial-gradient(ellipse farthest-corner at center, #607D8B 0%, #546E7A 100%);  CLASSIC*/
 	/*background: radial-gradient(ellipse farthest-corner at center, #42A5F5 0%, #2196F3 100%);  BLUE*/
@@ -96,7 +94,7 @@
 	z-index: 5;
 }
 .customBtn{
-	cursor: pointer;
+  cursor: pointer;
 	width: 90px;
 	height: 28px;
 	background: #009688;
@@ -108,11 +106,11 @@
 	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
 	border: 1px solid #009688;
-    border-radius: 8px;
+  border-radius: 8px;
 	margin-bottom: 8px;
 }
 #settingsBox{
-    position: absolute;
+  position: absolute;
 	background: #fcfcfc;
 	margin: 0 auto;
 	top: 0;
@@ -122,12 +120,12 @@
 	z-index: 2;
 }
 .showSettings{
-    transition-property: left;
-    left: 0!important;
-    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    /*transition: 0.2s;
-    transition-timing-function: ease-out;*/
-    transform: translateX(0) translateY(0);
+  transition-property: left;
+  left: 0!important;
+  /*transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);*/
+  transition: 300ms;
+  transition-timing-function: ease-out;
+  transform: translateX(0) translateY(0);
 }
 .hideSettings{
     transition-property: left;
@@ -138,9 +136,12 @@
     transform: translateX(-100%) translateY(0);
 }
 #addNewTaskBox{
-    position: relative;
+  overflow: hidden;
+  position: relative;
 	background: #fcfcfc;
-    left: 100%;
+	border-radius: 8px;
+  left: 10vw;
+  top: -100vh;
 	width: 80%;
 	height: auto;
 	opacity: 0;
@@ -199,10 +200,31 @@ h1{
 	font-family: 'Roboto', sans-serif;
 	font-size: 18px;
 	font-weight: bold;
-    left: 50%;
+  left: 50%;
 	top: 50%;
 	transform: translateX(-50%);
 }
+#newTaskTitle{
+  border-bottom: 1px solid rgba(194,194,194,.25);
+  position: relative !important;
+  width: 100%;
+  display: inline-block;
+  height: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
+  z-index: 3;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  margin: 0 auto;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 .headText{
 	position: absolute;
 	font-family: 'Roboto', sans-serif;
@@ -268,12 +290,14 @@ h1{
 	border-bottom: 1px solid rgba(194,194,194,.25);
 	position: relative;
 	width: 100%;
-	height: 50px;
+  height: 50px;
 	padding-top: 10%;
+  padding-bottom: 5px;
 	margin-bottom: 20px;
 	z-index: 3;
 }
 .playerContainer{
+	position: relative;
 	position: relative;
 	width: 100%;
 	height: 40px;
@@ -333,9 +357,9 @@ h1{
 	color: rgba(0,0,0,0.4);
 	text-align: left;
 	font-size: 11px;
-    padding-left: 5%;
-    padding-top: 2px;
-    text-align: left;
+  padding-left: 5%;
+  padding-top: 2px;
+  text-align: left;
 	cursor: pointer;
 	user-select: none;
 }
@@ -343,7 +367,7 @@ h1{
 	border-bottom: 1px solid rgba(194,194,194,.25);
 	position: relative;
 	width : 93% !important;
-	height: 60px;
+	height: auto;
 	margin-left: 3%;
 	cursor: pointer;
 	text-align: center;
@@ -354,12 +378,32 @@ h1{
 	width: 100%;
 	height: 25px;
 	border: 1px solid #c4c4c4;
-    border-radius: 4px;
+  border-radius: 4px;
 	background-color: #fff;
 }
 .addTaskText{
-	font-size: 18;
-	top: 0px;
+	font-size: 16px;
+  margin-top: 10px;
+}
+#taskName{
+  width: 80%;
+  height: 35px;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+	background-color: #fff;
+}
+#cancelAddBtn{
+  width: 90px;
+  height: 35px;
+  background: #FFEBEE;
+  color: #F44336;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  border: 1px solid #F44336;
+  border-radius: 8px;
+}
+.cancelAddBtn:active{
+	background: #B71C1C;
 }
 #addTaskSliders{
     position: relative;
@@ -369,10 +413,20 @@ h1{
     color: black !important;
     text-align: center;
     font-size: 16px !important;
+    margin-left: 5px;
 }
 .newTaskSlider{
-    display: inline-block;
-    width: 180px;
+  /*display: table;
+  position: relative;*/
+  width: 180px;
+  left: 10%;
+}
+#history{
+  position: relative;
+ 	width: 100%;
+ 	height: auto;
+ 	background: #ffffff;
+ 	margin-top: 5px;
 }
 .dayTimeSelection{
     display: inline-block;
@@ -394,7 +448,7 @@ h1{
 	padding-top: 2%;
 	float: left;
 	width: 33.3%;
-    height: 10%;
+  height: 10%;
 	min-height: 55px;
 }
 .subMenuTitle{
@@ -428,18 +482,18 @@ h1{
 	display: block;
 	background: white;
 	position: absolute;
-    left: 50%;
-    top: 100%;
+  left: 50%;
+  top: 100%;
 	margin: 0 auto;
 	margin-top: 20%;
 	font-family: 'Roboto', sans-serif;
 	width: 30%;
-    height: auto;
+  height: auto;
 	font-size: 20px;
 	max-width: 400px;
 	min-width: 220px;
-	border: 1px solid #c4c4c4;
-    opacity: 0;
+  border-radius: 8px;
+  opacity: 0;
 	z-index: 10;
 }
 @keyframes showAlert {
@@ -455,13 +509,12 @@ h1{
     animation: showAlert 0.2s linear;
 }
 .showNewTask{
-    opacity: 1 !important;
-    transform: translateX(-90vw) translateY(10vh);
-    transition: transform 500ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
-    /*animation: showNewTask 0.2s ease-out;*/
+  opacity: 1 !important;
+  transform: translateY(110vh) !important;
+  -webkit-transition: all 300ms !important;
 }
 .themeBtn{
-	border-bottom: 1px solid #c4c4c4;
+	border-bottom: 1px solid rgba(194,194,194,.25);
 	width: 100%;
 	height: 30px;
 	padding-top: 10px;
@@ -479,11 +532,11 @@ h1{
 }
 .endThemeBtn{
 	text-align: center;
-	padding: 10px;
+	padding: 6px;
 }
 .menuButton{
 	width: 90px;
-	height: 30px;
+	height: 35px;
 	background: white;
 	font-family: 'Roboto', sans-serif;
 	font-size: 15px;
@@ -520,7 +573,7 @@ input[type=checkbox]:after {
     position: absolute;
     display: inline-block;
     background: #fff;
-	border: 1px solid #c4c4c4;
+	   border: 1px solid #c4c4c4;
     border-radius: 4px;
 }
 input[type=checkbox]:checked:after {

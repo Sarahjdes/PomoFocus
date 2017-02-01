@@ -355,14 +355,13 @@ h1{
 	cursor: pointer;
 	user-select: none;
 }
-.addTaskForm{
-	border-bottom: 1px solid rgba(194,194,194,.25);
+.taskForm{
 	position: relative;
-	width : 93% !important;
+	width : 100%;
 	height: auto;
-	margin-left: 3%;
+	margin-left: 5%;
 	cursor: pointer;
-	text-align: center;
+  overflow: scroll;
 }
 #addInput{
 	position: absolute;
@@ -376,6 +375,7 @@ h1{
 .addTaskText{
 	font-size: 16px;
   margin-top: 10px;
+  padding-left: 5%;
 }
 #taskName{
   width: 80%;
@@ -383,22 +383,20 @@ h1{
   border: 1px solid #c4c4c4;
   border-radius: 8px;
 	background-color: #fff;
+  font-size: 14px;
+  margin: 5px 5px 5px 10%;
+  padding-left: 10px;
 }
-#addTaskSliders{
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    font-family: 'Roboto', sans-serif;
-    color: black !important;
-    text-align: center;
-    font-size: 16px !important;
-    margin-left: 5px;
+#sliderContainer{
+  width: 100%;
+  font-size: 12px;
+  border-top: 1px solid rgba(194,194,194,.25);
+  padding-top: 15px;
 }
 .newTaskSlider{
-  /*display: table;
-  position: relative;*/
   width: 180px;
-  left: 10%;
+  text-align: center;
+  margin: 15px 5px 15px 20%;
 }
 #history{
   position: relative;
@@ -408,9 +406,17 @@ h1{
  	margin-top: 5px;
 }
 .dayTimeSelection{
-    display: inline-block;
-    background-color: blue;
-    color: white;
+  display: initial;
+  background-color: grey;
+  color: white;
+  width: 40px;
+  height: 25px;
+  font-size: 14px;
+  padding: 5px;
+  border-radius: 4px;
+}
+.dayTimeSelection:checked{
+  background-color: red;
 }
 #subMenu{
 	position: fixed;
@@ -445,11 +451,18 @@ h1{
     max-height: 2px;
     height: 1px;
 }
-.userMinutes{
+.userTime{
 	width: 30px;
+  background: #ffffff;
+  padding: 10px;
+  border: 1px solid rgba(194,194,194,.25);
+  border-radius: 4px;
+  font-size: 14px;
 }
-.userSeconds{
-	width: 30px;
+#startTime{
+  width: 100%;
+  text-align: center;
+  margin-top: 5px;
 }
 #customizeTime{
 	margin-top: 10px;

@@ -15,33 +15,26 @@
 				<i class="material-icons menuIcons" id="settingsBtn">settings</i>
 				<i class="material-icons menuIcons" id="addBtn">add</i>
 			</div>
-			<span id="time">25 : 00</span>
-			<div>
-				<!-- <span> o-o-o-o-o-o-o-o</span>-->
-			</div>
-			<div id="btnBox">
-				<i class="material-icons player-icons" id="startBtn">play_circle_outline</i>
-				<i class="material-icons player-icons" id="stopBtn">pause_circle_outline</i>
-				<i class="material-icons player-icons" id="resetBtn">stop</i><br>
-				<button type="button" class="customBtn">Short Break</button>
-				<button type="button" class="customBtn">Long Break</button>
-			</div>
+			<div id="timeContainer">
+				<span id="time">25 : 00</span>
+			</div><br>
+			<span id="minorText">Current Task: Long Break</span>
 		</div>
 		<div id="tasks">
 			<div id="task1" class="task">
 				<span  class="taskText"><i class="fa fa-check-circle-o fa-lg taskState"></i> Estudiar Desarrollo de Apps </span>
 				<i class="fa fa-ellipsis-v fa-lg taskTime"></i>
-				<br><span class="subTask">10:25 - 10:40 - 15 minutes pomodoro</span>
+				<br><span class="subTask">10:25 - 10:40, Mar 22 de Junio, 2017</span>
 			</div>
 			<div id="task2" class="task">
 				<span class="taskText"><i class="fa fa-check-circle-o fa-lg taskState"></i> Diseñar Mockups </span>
 				<i class="fa fa-ellipsis-v fa-lg taskTime"></i>
-				<br><span class="subTask">10:25 - 10:40 - 15 minutes pomodoro</span>
+				<br><span class="subTask">10:45 - 11:00, Mar 22 de Junio, 2017</span>
 			</div>
 			<div id="task3" class="task">
 				<span class="taskText"><i class="fa fa-circle-o fa-lg taskState"></i> Trabajar en Presentación </span>
 				<i class="fa fa-ellipsis-v fa-lg taskTime"></i>
-				<br><span class="subTask">10:25 - 10:40 - 15 minutes pomodoro</span>
+				<br><span class="subTask">11:15 - 11:40, Mar 22 de Junio, 2017</span>
 			</div>
 		</div>
 		<div id="history"></div>
@@ -113,6 +106,7 @@
 			<input id="taskName" type="text" placeholder="New Task Name"><br>
 			<span class="addTaskText">Start Time</span><br>
 			<div id="startTime">
+				<input id="taskDate" type="date"><br>
 				<input type="number" class="userTime" value="10">:<input type="number" class="userTime" value="30">
 				<div class="dayTimeSelection" value="am" name="amPmSelection"checked>AM</div>
 				<div class="dayTimeSelection" value="pm" name="amPmSelection">PM</div>

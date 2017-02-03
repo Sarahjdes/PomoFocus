@@ -17,7 +17,11 @@ var app = {
         "success": "0",
         "failed": "0"
     },
-    "pomodoros" : []
+		"currentTask" : {}
+		,
+		"tags" : [],
+		"ids" : [],
+		"pomodoros" : []
 };
 
 window.onload = pageLoaded();
@@ -41,13 +45,11 @@ function pageLoaded(){
 	var historyBtn = document.getElementById("historyBtn");
 	var tasks = document.getElementById("tasks");
 
-    // Load user settings from localStorage and update the app object
-	loadSettings();
+	// Load user settings from localStorage and update the app object
+	loadAppState();
 	// Put the values in the actual dom
-    document.getElementById("volumeSlider").value = app.settings.alarmVolume;
+	loadAppDom();
 	updateUserTheme();
-    // Update the user task list for today, user stats, etc
-    updatePomodoros();
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
@@ -62,13 +64,20 @@ function pageLoaded(){
 		var addNewTaskBtn = document.getElementById("addNewTaskBtn");
 		var cancelBtn = document.getElementById("cancelAddBtn");
 
+		document.getElementById("taskDate").value = getCurrentDate();
+		document.getElementById("taskDate").min = getCurrentDate();
+
 		addNewTaskBox.classList.add("showNewTask");
 		mainBox.classList.add("hideMainLeft");
-		addNewTaskBtn.onclick = function goBack(){
+		addNewTaskBtn.onclick = function saveTask(){
+			// add the new task to the app object
+			addTask();
+			// Save the app state to localStorage
+			saveAppState();
+			// Re-load the task list
+			loadAppDom();
 			addNewTaskBox.classList.remove("showNewTask");
-					mainBox.classList.remove("hideMainLeft");
-		  // add the new task to the app object, then save the app state
-
+			mainBox.classList.remove("hideMainLeft");
 		};
 		cancelBtn.onclick = function goBack(){
 			addNewTaskBox.classList.remove("showNewTask");
@@ -99,11 +108,25 @@ function pageLoaded(){
 	};*/
 }
 
+function activeTask(task, time){
+	var time = new Date();
+	var now = time.getHours() + ":" + time.getMinutes();
+	if(task.startTime === now || task.startNow === true){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 function startPomodoro(){
 	// This function will start a new pomodoro once the start or reset buttons have been clicked.
-	if(clock.pomodoroFlag  == 0){
-		// If one second has passed then decrease time
-		clock.pomodoroFlag = setInterval(decreaseTime, 1000);
+	var currentTask = app.currentTask;
+	if(activeTask(currentTask) === true){
+		document.getElementById("minorText").innerHTML = currentTask.name;
+		if(clock.pomodoroFlag  == 0){
+			// If one second has passed then decrease time
+			clock.pomodoroFlag = setInterval(decreaseTime, 1000);
+		}
 	}
 }
 
@@ -119,7 +142,7 @@ function resetPomodoro(){
 	// Restart the shown time to the initial time
 	clock.minutes = clock.initMinutes;
 	clock.seconds = clock.initSeconds;
-	timeShown.innerHTML =clock.minutes + " : 00";
+	timeShown.innerHTML = clock.minutes + " : 00";
 	startPomodoro();
 }
 
@@ -129,6 +152,7 @@ function decreaseTime(){
 	if(clock.minutes == 0 && clock.seconds == 0){
 		// Pomodoro Completed
 		playAlarmClock();
+		document.getElementById("minorText").innerHTML = "No active tasks";
 		if(app.settings.alarmVibrate === true){
 		    Android.alarmVibrate();
 		}
@@ -312,22 +336,65 @@ function showThemeSelection(){
     };
 };
 
-function updatePomodoros(){
-	// Updates the user settings and task list
+function getCurrentDate(){
+	// Returns the current date in string format
 	var date = new Date();
 	var day = date.getDate();
-	var dayOfWeek = date.getDay();
-	var month = date.getMonth();
+	var month = date.getMonth() + 1;
 	var year = date.getFullYear();
-    // objetivo: guardar la informacion del objeto pomodoro en el dom
-    // En la pestaña de tareas se muestran solo las tareas de hoy
-    // En la pestaña historial se muestran todas las tareas del objeto
-
-	console.log(dayOfWeek, day, month, year);
+	var fixedDate = fixTime(year, month, day);
+	return fixedDate;
 }
 
-function createTaskElement(){
+function fixTime(year, month, day){
+	var fixedDate = "";
+	if(month < 10 && day < 10){
+		fixedDate = year + "-0" + month + "-0" + day;
+	}else if(month < 10){
+		fixedDate = year + "-0" + month + "-" + day;
+	}else if(day < 10){
+		fixedDate = year + "-" + month + "-0" + day;
+	}else{
+		fixedDate = year + "-" + month + "-" + day;
+	}
+	return fixedDate;
+}
 
+function addTask(){
+	var newTask = {};
+	newTask.id = randomId();
+	newTask.name = document.getElementById("taskName").value;
+	newTask.date = document.getElementById("taskDate").value;
+	newTask.startTime = document.getElementById("taskStartTime").value;
+	newTask.duration = document.getElementById("duration").value;
+	newTask.break = document.getElementById("breakTime").value;
+	newTask.longBreak = document.getElementById("longBreakTime").value;
+	newTask.startNow = false;
+	// SOLVE TAGS SYSTEM
+	app.ids.push(newTask.id);
+	app.pomodoros.push(newTask);
+}
+
+function randomId(){
+	// create and return a valid id
+	var validNumber = false;
+	var number = 0;
+	while(validNumber !== true){
+		number = Math.floor((Math.random() * 100000000000) + 1); // Creates a random number between 1 and 100000000000
+		validNumber = alreadyExists(number);
+	}
+	return number.toString();
+}
+
+function alreadyExists(num){
+	// Implement merge sort later
+	var ids = app.ids;
+	for(var i = 0; i < ids.length; i++){
+		if(ids[i] === num){
+			return false;
+		}
+	}
+	return true;
 }
 
 function playAlarmClock(){
@@ -346,7 +413,7 @@ function playAlarmClock(){
 
 function playAlarm(alarm){
 	if(alarm != 0){
-        Android.playSound(alarm, (app.settings.alarmVolume / 100));
+		Android.playSound(alarm, (app.settings.alarmVolume / 100));
 	}
 }
 
@@ -358,7 +425,7 @@ function toggleAlarm(value){
     app.settings.alarmVibrate = value;
 }
 
-function loadSettings(){
+function loadAppState(){
 	if(typeof(Storage) != "undefined"){
 		if(localStorage.getItem("app") != null){                // Si es que hay opciones guardadas
 			app = JSON.parse(localStorage.getItem("app"));
@@ -375,9 +442,69 @@ function saveAppState(){
 		localStorage.setItem("app", JSON.stringify(app));
 	}
 }
-
-function loadAppState(){
-	if(typeof(Storage) != "undefined"){
-		app = JSON.parse(localStorage.getItem("app"));
+function loadAppDom(){
+	// Sets values stored in the app object in the actual html
+	var date = getCurrentDate();
+	var pomodoros = app.pomodoros;
+	document.getElementById("volumeSlider").value = app.settings.alarmVolume;
+	document.getElementById("tasks").innerHTML = "";
+	// Add pomodoros scheduled for today to the "tasks" menu
+	for(var i = 0; i < pomodoros.length; i++){
+		if(pomodoros[i].date == date){
+			addDomTask(pomodoros[i]);
+		}
 	}
+}
+
+function addDomTask(task){
+	var tasks = document.getElementById("tasks");
+	var container = document.createElement("div");
+	var title = document.createElement("span");
+	var subTitle = document.createElement("subTask");
+	var icon = document.createElement("i");
+	var editIcon = document.createElement("i");
+	var jump = document.createElement("br");
+
+	container.classList.add("task");
+	title.classList.add("taskText");
+	subTitle.classList.add("subTask");
+	icon.classList.add("fa", "fa-circle-o", "fa-lg", "taskState");
+	editIcon.classList.add("fa", "fa-ellipsis-v", "fa-lg", "taskTime");
+
+	title.innerHTML += " " + task.name;
+	subTitle.innerHTML = task.startTime + " - " + task.duration + " minutes";
+
+	title.appendChild(icon);
+	title.onclick = function (){
+		// abrir mensaje preguntando si quieres empezar el pomodoro ahora
+	};
+	editIcon.onclick = function (){
+		// editar la tarea
+		editTask(this.parentElement.id);
+	};
+	container.appendChild(title);
+	container.appendChild(editIcon);
+	container.appendChild(jump);
+	container.appendChild(subTitle);
+	container.id = task.id;
+	tasks.appendChild(container);
+}
+
+function editTask(taskId){
+	// encontrar la task a la que le pertenece este id
+	var pomodoros = app.pomodoros;
+	var task;
+	var window = document.getElementById("editWindow");
+	for(var i = 0; i < pomodoros.length; i++){
+		if(pomodoros[i].id === taskId){
+			task = pomodoros[i];
+			break;
+		}
+	}
+	window.classList.add("showEditW");
+	document.getElementById("editTaskName").value = task.name;
+	document.getElementById("editTaskName").value = task.startTime;
+	document.getElementById("editTaskName").value = task.tags;
+	document.getElementById("editTaskName").value = task.name;
+
 }

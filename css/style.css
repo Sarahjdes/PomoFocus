@@ -70,7 +70,7 @@
 	/*background: radial-gradient(ellipse farthest-corner at center, #FF9D68 0%, #FF7A75 100%);  BRIGHT*/
 	/*background: radial-gradient(ellipse farthest-corner at center, #FC216B 0%, #E91E63 100%);  PINK*/
 	margin: 0 auto;
-	/*opacity: 0.9;*/
+	opacity: 0.9;
 	width: 100% !important;
   height: 243px;
 	text-align: center;
@@ -129,6 +129,69 @@
 .showNewTask{
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
+  will-change: transform;
+}
+#editWindow{
+  width: 80% !important;
+  max-height: 85%;
+  overflow: scroll;
+  top: -115vh !important;
+}
+#editTask{
+  padding-top: 10px;
+}
+#editTaskName{
+  width: 80%;
+  height: 35px;
+  border: 1px solid rgba(194,194,194,.25);
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 14px;
+  margin: 5px 5px 5px 10%;
+  padding-left: 10px;
+}
+#editWTime{
+  padding-left: 29px;
+}
+#editHeader{
+  height: 30px;
+  margin-bottom: 0px;
+  padding-top: 5%;
+  padding-bottom: 0px;
+}
+#editTaskTitle{
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#deleteTaskBtn{
+  margin-left: 47px;
+  width: 200px;
+  background-color: #ffedf0;
+  color: #f24438;
+  border: 1px solid #f24438;
+}
+#deletePrompt{
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+#fieldsAlert{
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+#startNow{
+  font-size: 16px;
+  padding: 10px;
+  text-align: center;
+}
+.editPTime{
+  font-size: 12px;
+}
+.showEditW{
+  -webkit-transform: translateY(-100%);
+  transform: translateY(-100%);
   will-change: transform;
 }
 .menuIcons{
@@ -397,6 +460,11 @@ h1{
 	margin-left: 5%;
 	cursor: pointer;
   overflow: scroll;
+}
+.editIcon{
+  font-size: 20px;
+  min-width: 40px;
+  min-height: 20px;
 }
 #addInput{
 	position: absolute;

@@ -15,28 +15,15 @@
 				<i class="material-icons menuIcons" id="settingsBtn">settings</i>
 				<i class="material-icons menuIcons" id="addBtn">add</i>
 			</div>
-			<div id="timeContainer">
-				<span id="time">25 : 00</span>
-			</div><br>
-			<span id="minorText">Current Task: Long Break</span>
+			<span id="time">25 : 00</span><br>
+			<div id="controlBtns">
+				<i class="material-icons player-icons" id="startBtn">play_circle_outline</i>
+				<i class="material-icons player-icons" id="stopBtn">pause_circle_outline</i>
+				<i class="material-icons player-icons" id="resetBtn">stop</i><br>
+			</div>
+			<span id="minorText">No active tasks</span>
 		</div>
-		<div id="tasks">
-			<div id="task1" class="task">
-				<span  class="taskText"><i class="fa fa-check-circle-o fa-lg taskState"></i> Estudiar Desarrollo de Apps </span>
-				<i class="fa fa-ellipsis-v fa-lg taskTime"></i>
-				<br><span class="subTask">10:25 - 10:40, Mar 22 de Junio, 2017</span>
-			</div>
-			<div id="task2" class="task">
-				<span class="taskText"><i class="fa fa-check-circle-o fa-lg taskState"></i> Diseñar Mockups </span>
-				<i class="fa fa-ellipsis-v fa-lg taskTime"></i>
-				<br><span class="subTask">10:45 - 11:00, Mar 22 de Junio, 2017</span>
-			</div>
-			<div id="task3" class="task">
-				<span class="taskText"><i class="fa fa-circle-o fa-lg taskState"></i> Trabajar en Presentación </span>
-				<i class="fa fa-ellipsis-v fa-lg taskTime"></i>
-				<br><span class="subTask">11:15 - 11:40, Mar 22 de Junio, 2017</span>
-			</div>
-		</div>
+		<div id="tasks"></div>
 		<div id="history"></div>
 		<div id="subMenu">
 			<div class="customBtn selectedSubMenu"></div>
@@ -84,12 +71,20 @@
 		</div>
 		<div id="viewCheckBox">
 			<span class="headText">Vibrar cuando suene la alarma</span>
-			<input type="checkBox" class="settingsIcons" id="vibrarCheck" onchange="toggleAlarm(this.checked)">
+			<input type="checkBox" id="vibrarCheck" onchange="toggleAlarm(this.checked)">
 		</div>
-		<div class="viewBtn">
-			<span class="headText">Califica esta aplicación</span>
-			<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
-		</div>
+		<a href="mailto:vacj.22@gmail.com?subject=Feedback">
+			<div class="viewBtn">
+				<span class="headText">Enviar Feedback</span>
+				<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
+			</div>
+		</a>
+		<a href="https://play.google.com/store/movies/details/Un_esp%C3%ADa_y_medio?id=uMkLGLTBOHU&hl=es_419">
+			<div class="viewBtn">
+				<span class="headText">Califica esta Aplicación</span>
+				<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
+			</div>
+		</a>
 	</div>
 
 	<!-- NEW TASK BOX -->
@@ -104,21 +99,24 @@
 		<div id="taskForm">
 			<span class="addTaskText">Task Name</span><br>
 			<input id="taskName" type="text" placeholder="New Task Name"><br>
+			<span class="addTaskText">Tags</span><br>
+			<div id="tags">
+				<span class="subTask" id="noTagText">No tags created yet, create your first tag!</span>
+			</div>
+			<div id="tagsBtn" class="userTime">+</div><br>
 			<span class="addTaskText">Start Time</span><br>
 			<div id="startTime">
 				<input id="taskDate" type="date"><br>
-				<input type="number" class="userTime" value="10">:<input type="number" class="userTime" value="30">
-				<div class="dayTimeSelection" value="am" name="amPmSelection"checked>AM</div>
-				<div class="dayTimeSelection" value="pm" name="amPmSelection">PM</div>
+				<input id="taskStartTime" type="time"><br>
 			</div>
 			<br>
 			<div id="sliderContainer">
 				<span class="addTaskText">Largo del Pomodoro</span><br>
-				<input type="range" min="0" max="30" id="pomoLength" class="newTaskSlider" value="25" onchange="updateNewPomo(this.value, 'pomoLengthText')"><span id="pomoLengthText">25 min</span><br>
+				<input type="range" min="0" max="30" id="duration" class="newTaskSlider" value="25" onchange="updateNewPomo(this.value, 'pomoLengthText')"><span id="pomoLengthText">25 min</span><br>
 				<span class="addTaskText">Largo del descanso corto</span><br>
-				<input type="range" min="0" max="15" id="shortPomoLength" class="newTaskSlider" value="5" onchange="updateNewPomo(this.value, 'shortPomoLengthText')"><span id="shortPomoLengthText">5 min</span><br>
+				<input type="range" min="0" max="15" id="breakTime" class="newTaskSlider" value="5" onchange="updateNewPomo(this.value, 'shortPomoLengthText')"><span id="shortPomoLengthText">5 min</span><br>
 				<span class="addTaskText">Largo del descanso largo</span><br>
-				<input type="range" min="0" max="30" id="longPomoLength" class="newTaskSlider" value="15" onchange="updateNewPomo(this.value, 'longPomoLengthText')"><span id="longPomoLengthText">15 min</span><br>
+				<input type="range" min="0" max="30" id="longBreakTime" class="newTaskSlider" value="15" onchange="updateNewPomo(this.value, 'longPomoLengthText')"><span id="longPomoLengthText">15 min</span><br>
 			</div>
 			<!-- repetir pomodoro: diario, semanal o mensualmente -->
 			<div class="endThemeBtn">

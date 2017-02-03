@@ -121,9 +121,10 @@
   left: 100%;
   top: 0;
 	width: 100%;
-	height: 100%;
+	height: 93vh;
   transition: 300ms ease-out;
-	z-index: 2;
+  overflow: scroll;
+  z-index: 2;
 }
 .showNewTask{
   -webkit-transform: translateX(-100%);
@@ -281,7 +282,18 @@ h1{
 	margin-bottom: 20px;
 }
 #vibrarCheck{
-
+  position: absolute;
+  right: 5px;
+  top: 12px !important;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  color: grey;
+  padding: 0px;
+  font-size: 14px;
+  text-align: center;
+  border: 2px solid #c4c4c4;
+  border-radius: 4px;
 }
 .headerContainer{
 	border-bottom: 1px solid rgba(194,194,194,.25);
@@ -312,12 +324,31 @@ h1{
 #btnBox{
 	margin-top: 2px;
 }
+#tags{
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  text-align: center;
+  overflow: scroll;
+}
+#tagsBtn{
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 2px;
+}
 #tasks{
 	position: relative;
 	width: 100%;
-	height: auto;
+	height: 40%;
+  max-height: 400px;
+  overflow: scroll;
 	background: #ffffff;
 	margin-top: 5px;
+}
+#noTagText{
+  position: relative !important;
 }
 .task{
 	width: 100%;
@@ -408,19 +439,6 @@ h1{
  	height: auto;
  	background: #ffffff;
  	margin-top: 5px;
-}
-.dayTimeSelection{
-  display: initial;
-  background-color: grey;
-  color: white;
-  width: 40px;
-  height: 25px;
-  font-size: 14px;
-  padding: 5px;
-  border-radius: 4px;
-}
-.dayTimeSelection:checked{
-  background-color: red;
 }
 #subMenu{
 	position: fixed;
@@ -550,47 +568,40 @@ h1{
   opacity: 0.8 !important;
 }
 input[type=checkbox] {
+    content: '';
     appearance:none;
     -webkit-appearance:none;
     -moz-appearance:none;
 }
-
-input[type=checkbox]:after {
-    content: '';
-    width: 20px;
-    height: 20px;
-    top: 0;
-    right: 0;
-    position: absolute;
-    display: inline-block;
-    background: #fff;
-	   border: 1px solid #c4c4c4;
-    border-radius: 4px;
-}
 input[type=checkbox]:checked:after {
     content: '✓';
-    font-size: 24px;
-    width: 20px;
-    height: 20px;
-    top: 0;
-    right: 0;
 }
 input[type=range] {
 	-webkit-appearance: none;
 	height: 10px;
 	border: 1px solid #c4c4c4;
-    border-radius: 4px;
+  border-radius: 4px;
 	background-color: #fff;
 }
 input[type='range']::-webkit-slider-thumb {
 	-webkit-appearance: none;
-	background-color: #47c9a2;
-	width: 20px;
+  background-color: grey;
+	/*background-color: #47c9a2;*/
+  width: 20px;
 	height: 20px;
 	border-radius: 10px;
 	cursor: pointer;
 }
 input[type="date"] {
+  background: #ffffff;
+  min-width: 200px;
+  padding: 10px;
+  border: 1px solid rgba(194,194,194,.25);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+input[type="time"] {
   background: #ffffff;
   min-width: 200px;
   padding: 10px;

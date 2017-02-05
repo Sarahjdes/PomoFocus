@@ -169,6 +169,13 @@ function decreaseTime(){
 	if(clock.minutes == 0 && clock.seconds == 0){
 		// Pomodoro Completed
 		playAlarmClock();
+		app.stats.finishedPomos++;
+		for(var i = 0; i < pomodoros.length; i++){
+			if(pomodoros[i].id === app.currentTask.id){
+				pomodoros[i].finished = true;
+				break;
+			}
+		}
 		document.getElementById("minorText").innerHTML = "No active tasks";
 		if(app.settings.alarmVibrate === true){
 		    Android.alarmVibrate();
@@ -457,6 +464,7 @@ function addTask(){
 	newTask.break = document.getElementById("breakTime").value;
 	newTask.longBreak = document.getElementById("longBreakTime").value;
 	newTask.startNow = false;
+	newTask.finished = false;
 	// SOLVE TAGS SYSTEM
 	app.ids.push(newTask.id);
 	app.pomodoros.push(newTask);
@@ -488,7 +496,11 @@ function addDomTask(task){
 	container.classList.add("task");
 	title.classList.add("taskText");
 	subTitle.classList.add("subTask");
-	icon.classList.add("fa", "fa-circle-o", "fa-lg", "taskState");
+	if(task.finished === false){
+		icon.classList.add("fa", "fa-circle-o", "fa-lg", "taskState");
+	}else{
+		icon.classList.add("fa", "fa-check-circle-o", "fa-lg", "taskState");
+	}
 	editIcon.classList.add("fa", "fa-ellipsis-v", "fa-lg", "taskTime", "editIcon");
 
 	title.appendChild(icon);
@@ -497,22 +509,24 @@ function addDomTask(task){
 
 	title.onclick = function (){
 		// abrir mensaje preguntando si quieres empezar el pomodoro ahora
-		shadowBox.style.pointerEvents = 'auto';
-		shadowBox.classList.add("showShadowBox");
-		startNow.classList.add("showAlert");
-		startNowBtnY.onclick = function(){
-			task.startNow = true;
-			app.currentTask = task;
-			shadowBox.style.pointerEvents = 'none';
-			shadowBox.classList.remove("showShadowBox");
-			startNow.classList.remove("showAlert");
-			startPomodoro();
-		};
-		startNowBtnN.onclick = function(){
-			shadowBox.style.pointerEvents = 'none';
-			shadowBox.classList.remove("showShadowBox");
-			startNow.classList.remove("showAlert");
-		};
+		if(task.finished === false){
+			shadowBox.style.pointerEvents = 'auto';
+			shadowBox.classList.add("showShadowBox");
+			startNow.classList.add("showAlert");
+			startNowBtnY.onclick = function(){
+				task.startNow = true;
+				app.currentTask = task;
+				shadowBox.style.pointerEvents = 'none';
+				shadowBox.classList.remove("showShadowBox");
+				startNow.classList.remove("showAlert");
+				startPomodoro();
+			};
+			startNowBtnN.onclick = function(){
+				shadowBox.style.pointerEvents = 'none';
+				shadowBox.classList.remove("showShadowBox");
+				startNow.classList.remove("showAlert");
+			};
+		}
 	};
 	editIcon.onclick = function (){
 		// editar la tarea

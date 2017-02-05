@@ -21,8 +21,11 @@ var app = {
 		,
 		"tags" : [],
 		"ids" : [],
-		"pomodoros" : []
+		"pomodoros" : [],
+		"pomodorosForToday" : []
 };
+
+var userCanAddTask = true;
 
 window.onload = pageLoaded();
 
@@ -49,6 +52,7 @@ function pageLoaded(){
 	// Load user settings from localStorage and update the app object
 	loadAppState();
 	// Put the values in the actual dom
+	taskUpdate();
 	loadAppDom();
 	updateUserTheme();
 	startBtn.onclick = startPomodoro;
@@ -64,30 +68,31 @@ function pageLoaded(){
 		var addNewTaskBox = document.getElementById("newTaskBox");
 		var addNewTaskBtn = document.getElementById("addNewTaskBtn");
 		var cancelBtn = document.getElementById("cancelAddBtn");
-
+		var taskTag = document.getElementById("taskTag");
+		var tagSelect = document.getElementById("tagSelect");
 		document.getElementById("taskDate").value = getCurrentDate();
 		document.getElementById("taskDate").min = getCurrentDate();
 
 		addNewTaskBox.classList.add("showNewTask");
 		mainBox.classList.add("hideMainLeft");
+
 		addNewTaskBtn.onclick = function saveTask(){
 			// add the new task to the app object
-			if(filledForm() === true){
-				addTask();
-				saveAppState();
-				loadAppDom();			// Re-load the task list
-				document.getElementById("taskName").value = "";
-				addNewTaskBox.classList.remove("showNewTask");
-				mainBox.classList.remove("hideMainLeft");
-			}else{
-				shadowBox.style.pointerEvents = 'auto';
-				shadowBox.classList.add("showShadowBox");
-				fieldsAlert.classList.add("showAlert");
-				fieldsOk.onclick = function(){
-					shadowBox.style.pointerEvents = 'none';
-					shadowBox.classList.remove("showShadowBox");
-					fieldsAlert.classList.remove("showAlert");
+			checkTime(document.getElementById("taskStartTime").value);
+			if(userCanAddTask === true){
+				if(filledForm() === true){
+					addTask();
+					taskUpdate();
+					saveAppState();
+					loadAppDom();			// Re-load the task list
+					document.getElementById("taskName").value = "";
+					addNewTaskBox.classList.remove("showNewTask");
+					mainBox.classList.remove("hideMainLeft");
+				}else{
+					showError("Please fill all required fields.");
 				}
+			}else{
+				showError("Please select a different start time. This start time is already selected by another task.");
 			}
 		};
 		cancelBtn.onclick = function goBack(){
@@ -423,6 +428,35 @@ function toggleAlarm(value){
     app.settings.alarmVibrate = value;
 }
 
+function checkTime(val){
+	var pomos = app.pomodorosForToday;
+	for(var i = 0; i < pomos.length; i++){
+		if(pomos[i].startTime === val){
+			// This time is already selected in another task for today
+			userCanAddTask = false;
+			showError("Please select a different start time. This start time is already selected by another task.");
+			return;
+		}
+	}
+	userCanAddTask = true;
+}
+
+function showError(msg){
+	var shadowBox = document.getElementById("shadowBoxPop");
+	var errorW = document.getElementById("errorW");
+	var errorBtn = document.getElementById("errorBtn");
+	var errorMsg = document.getElementById("errorMsg");
+	shadowBox.style.pointerEvents = 'auto';
+	shadowBox.classList.add("showShadowBox");
+	errorMsg.innerHTML = msg;
+	errorW.classList.add("showAlert");
+	errorBtn.onclick = function(){
+		shadowBox.style.pointerEvents = 'none';
+		shadowBox.classList.remove("showShadowBox");
+		errorW.classList.remove("showAlert");
+	}
+}
+
 function loadAppState(){
 	if(typeof(Storage) != "undefined"){
 		if(localStorage.getItem("app") != null){                // Si es que hay opciones guardadas
@@ -440,17 +474,27 @@ function saveAppState(){
 		localStorage.setItem("app", JSON.stringify(app));
 	}
 }
+
+function taskUpdate(){
+	// updates the pomodorosForToday array
+	var date = getCurrentDate();
+	app.pomodorosForToday = [];
+	for(var i = 0; i < app.pomodoros.length; i++){
+		if(app.pomodoros[i].date === date){
+			app.pomodorosForToday.push(app.pomodoros[i]);
+		}
+	}
+}
+
 function loadAppDom(){
 	// Sets values stored in the app object in the actual html
 	var date = getCurrentDate();
-	var pomodoros = app.pomodoros;
+	var pomodoros = app.pomodorosForToday;
 	document.getElementById("volumeSlider").value = app.settings.alarmVolume;
 	document.getElementById("tasks").innerHTML = "";
 	// Add pomodoros scheduled for today to the "tasks" menu
 	for(var i = 0; i < pomodoros.length; i++){
-		if(pomodoros[i].date == date){
-			addDomTask(pomodoros[i]);
-		}
+		addDomTask(pomodoros[i]);
 	}
 }
 
@@ -465,7 +509,7 @@ function addTask(){
 	newTask.longBreak = document.getElementById("longBreakTime").value;
 	newTask.startNow = false;
 	newTask.finished = false;
-	// SOLVE TAGS SYSTEM
+	newTask.tag = document.getElementById("tag").value;
 	app.ids.push(newTask.id);
 	app.pomodoros.push(newTask);
 }
@@ -580,17 +624,21 @@ function editTask(taskId){
 	window.classList.add("showAlert");
 
 	saveBtn.onclick = function (){
-		app.pomodoros[position].name = taskName.value;
-		app.pomodoros[position].date = taskDate.value;
-		app.pomodoros[position].startTime = startTime.value;
-		app.pomodoros[position].duration = taskDuration.value;
-		app.pomodoros[position].break = taskBreak.value;
-		app.pomodoros[position].longBreak = taskLongBreak.value;
-		saveAppState();
-		loadAppDom();
-		shadowBox.style.pointerEvents = 'none';
-		shadowBox.classList.remove("showShadowBox");
-		window.classList.remove("showAlert");
+		if(userCanAddTask === true){
+			app.pomodoros[position].name = taskName.value;
+			app.pomodoros[position].date = taskDate.value;
+			app.pomodoros[position].startTime = startTime.value;
+			app.pomodoros[position].duration = taskDuration.value;
+			app.pomodoros[position].break = taskBreak.value;
+			app.pomodoros[position].longBreak = taskLongBreak.value;
+			saveAppState();
+			loadAppDom();
+			shadowBox.style.pointerEvents = 'none';
+			shadowBox.classList.remove("showShadowBox");
+			window.classList.remove("showAlert");
+		}else{
+			showError("Please select a different start time. This start time is already selected by another task.");
+		}
 	};
 	cancelBtn.onclick = function (){
 		shadowBox.style.pointerEvents = 'none';
@@ -607,6 +655,7 @@ function editTask(taskId){
 			idIndex = app.ids.indexOf(taskId);
 			app.ids.splice(idIndex, 1);
 			saveAppState();
+			taskUpdate();
 			loadAppDom();
 			shadowBox.style.pointerEvents = 'none';
 			shadowBox.classList.remove("showShadowBox");

@@ -145,6 +145,9 @@ function startPomodoro(){
 	if(activeTask(currentTask) === true){
 		// set the minutes and seconds
 		document.getElementById("minorText").innerHTML = "Working on: " + currentTask.name;
+		clock.initMinutes = currentTask.duration;
+		clock.minutes = clock.initMinutes;
+		clock.seconds = clock.initSeconds;
 		if(clock.pomodoroFlag  == 0){
 			// If one second has passed then decrease time
 			clock.pomodoroFlag = setInterval(decreaseTime, 1000);
@@ -174,17 +177,7 @@ function decreaseTime(){
 	if(clock.minutes == 0 && clock.seconds == 0){
 		// Pomodoro Completed
 		playAlarmClock();
-		app.stats.finishedPomos++;
-		for(var i = 0; i < pomodoros.length; i++){
-			if(pomodoros[i].id === app.currentTask.id){
-				pomodoros[i].finished = true;
-				break;
-			}
-		}
-		document.getElementById("minorText").innerHTML = "No active tasks";
-		if(app.settings.alarmVibrate === true){
-		    Android.alarmVibrate();
-		}
+		finishedPomodoro();
 		stopPomodoro();
 	}else if(clock.seconds == 0){
 		clock.minutes--;
@@ -197,6 +190,28 @@ function decreaseTime(){
 		timeShown.innerHTML = clock.minutes + " : 0" + clock.seconds;
 	}else{
 		timeShown.innerHTML = clock.minutes + " : " + clock.seconds;
+	}
+}
+
+function finishedPomodoro(){
+	for(var i = 0; i < app.pomodorosForToday.length; i++){
+		if(app.pomodorosForToday[i].id === app.currentTask.id){
+			app.pomodorosForToday[i].finished = true;
+			break;
+		}
+	}
+	for(var i = 0; i < app.pomodoros.length; i++){
+		if(app.pomodoros[i].id === app.currentTask.id){
+			app.pomodoros[i].finished = true;
+			break;
+		}
+	}
+	app.stats.finishedPomos++;
+	saveAppState();
+	loadAppDom();
+	document.getElementById("minorText").innerHTML = "No active tasks";
+	if(app.settings.alarmVibrate === true){
+			Android.alarmVibrate();
 	}
 }
 
@@ -490,7 +505,6 @@ function loadAppDom(){
 	// Sets values stored in the app object in the actual html
 	var date = getCurrentDate();
 	var pomodoros = app.pomodorosForToday;
-	document.getElementById("volumeSlider").value = app.settings.alarmVolume;
 	document.getElementById("tasks").innerHTML = "";
 	// Add pomodoros scheduled for today to the "tasks" menu
 	for(var i = 0; i < pomodoros.length; i++){
@@ -618,6 +632,9 @@ function editTask(taskId){
 	taskDuration.value = task.duration;
 	taskBreak.value = task.break;
 	taskLongBreak.value = task.longBreak;
+	document.getElementById("editDuration").value = task.duration;
+	document.getElementById("editBreakTime").value = task.break;
+	document.getElementById("editLongBreakTime").value = task.longBreak;
 	// We show the popup window
 	shadowBox.style.pointerEvents = 'auto';
 	shadowBox.classList.add("showShadowBox");

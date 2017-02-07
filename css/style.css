@@ -121,7 +121,7 @@
   left: 100%;
   top: 0;
 	width: 100%;
-	height: 93vh;
+	height: 100%;
   transition: 300ms ease-out;
   overflow: scroll;
   z-index: 2;
@@ -176,10 +176,21 @@
   font-size: 18px;
   text-align: center;
 }
-#fieldsAlert{
+#errorW{
   padding: 10px;
   font-size: 18px;
   text-align: center;
+  z-index: 20;
+}
+#errorTitle{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#errorHeader{
+  height: 29px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 6px;
 }
 #startNow{
   font-size: 16px;
@@ -401,17 +412,18 @@ h1{
   margin: 0 auto;
   margin-top: 2px;
 }
+.cell{
+  display: table-cell;
+  width: 100vw;
+}
 #tasks{
-	position: relative;
-	width: 100%;
-	height: 40%;
-  max-height: 400px;
-  overflow: scroll;
+	position: absolute;
+	width: 100vw;
+  height: 50vh;
 	background: #ffffff;
 	margin-top: 5px;
-}
-#noTagText{
-  position: relative !important;
+  overflow: scroll;
+  z-index: 1;
 }
 .task{
 	width: 100%;
@@ -425,6 +437,10 @@ h1{
 .taskState{
 	user-select: none;
 	color: #36cf85;
+}
+.failedTask{
+	user-select: none;
+	color: red;
 }
 .taskTime{
 	position: absolute;
@@ -453,12 +469,10 @@ h1{
 	cursor: pointer;
 	user-select: none;
 }
-.taskForm{
-	position: relative;
-	width : 100%;
+#taskForm{
+  width : 100%;
 	height: auto;
-	margin-left: 5%;
-	cursor: pointer;
+  max-height: 76vh;
   overflow: scroll;
 }
 .editIcon{
@@ -502,11 +516,47 @@ h1{
   margin: 15px 5px 15px 20%;
 }
 #history{
-  position: relative;
- 	width: 100%;
- 	height: auto;
+  position: absolute;
+ 	width: 100vw;
+  height: 50vh;
  	background: #ffffff;
  	margin-top: 5px;
+  overflow: scroll;
+  z-index: 1;
+}
+#secondMenu{
+  position: absolute;
+  display: table;
+  width: 300vw;
+  height: 400px;
+  transition: 300ms ease-out;
+}
+.moveSecondMenu1{
+  -webkit-transform: translateX(0vw);
+  transform: translateX(0vw);
+  will-change: transform;
+}
+.moveSecondMenu2{
+  -webkit-transform: translateX(-100vw);
+  transform: translateX(-100vw);
+  will-change: transform;
+}
+.moveSecondMenu3{
+  -webkit-transform: translateX(-200vw);
+  transform: translateX(-200vw);
+  will-change: transform;
+}
+#row{
+  display: table-row;
+}
+#stats{
+  position: absolute;
+  background: #ffffff;
+  width: 100vw;
+  height: 50vh;
+  margin-top: 5px;
+  overflow: scroll;
+  z-index: 1;
 }
 #subMenu{
 	position: fixed;
@@ -531,15 +581,32 @@ h1{
 	cursor: pointer;
 	color: black !important;
 	font-size: 15px;
+  user-select: none;
 }
-.selectedSubMenu{
-    padding: 0;
-    margin: 0;
-    border-radius: 0px;
-    position: relative;
-    width: 33.3%;
-    max-height: 2px;
-    height: 1px;
+#selectedSubMenu{
+  padding: 0;
+  margin: 0;
+  border-radius: 0px;
+  position: relative;
+  width: 33.3%;
+  max-height: 2px;
+  height: 1px;
+  transition: 300ms ease-out;
+}
+.moveBar1{
+  -webkit-transform: translateX(0vw);
+  transform: translateX(0vw);
+  will-change: transform;
+}
+.moveBar2{
+  -webkit-transform: translateX(33.3vw);
+  transform: translateX(33.3vw);
+  will-change: transform;
+}
+.moveBar3{
+  -webkit-transform: translateX(66.6vw);
+  transform: translateX(66.6vw);
+  will-change: transform;
 }
 .userTime{
 	width: 30px;
@@ -578,7 +645,7 @@ h1{
   border-radius: 8px;
   transition: all 300ms ease-out;
   opacity: 0;
-	z-index: 10;
+	z-index: 11;
 }
 .showAlert{
   opacity: 1;
@@ -629,7 +696,20 @@ h1{
   left: 0;
 	margin: 0 auto;
   transition: 300ms ease-out;
-	z-index: 9;
+	z-index: 10;
+}
+#shadowBoxPop{
+  pointer-events: none;
+  opacity: 0;
+	background: black;
+	position: fixed;
+	width: 100%;
+  height: 100%;
+	top: 0;
+  left: 0;
+	margin: 0 auto;
+  transition: 300ms ease-out;
+	z-index: 19;
 }
 .showShadowBox{
   transition-property: opacity !important;
@@ -670,6 +750,15 @@ input[type="date"] {
   font-size: 14px;
 }
 input[type="time"] {
+  background: #ffffff;
+  min-width: 200px;
+  padding: 10px;
+  border: 1px solid rgba(194,194,194,.25);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+select {
   background: #ffffff;
   min-width: 200px;
   padding: 10px;

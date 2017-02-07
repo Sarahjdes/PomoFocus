@@ -6,7 +6,9 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="fonts/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/style.css">
+	<script src="js/d3.min.js"></script>
 </head>
+
 
 <body>
 	<div id="container">
@@ -23,21 +25,35 @@
 			</div>
 			<span id="minorText">No active tasks</span>
 		</div>
-		<div id="tasks"></div>
-		<div id="history"></div>
+		<div id="secondMenu">
+			<div id="row">
+				<div class="cell">
+					<div id="tasks"></div>
+				</div>
+				<div class="cell">
+					<div id="stats">
+						<h3>Pomodors Finished: </h3>
+						<span id="statsTitle"></span><br>
+					</div>
+				</div>
+				<div class="cell">
+					<div id="history"></div>
+				</div>
+			</div>
+		</div>
 		<div id="subMenu">
-			<div class="customBtn selectedSubMenu"></div>
-			<div class="subMenuClass">
+			<div class="customBtn" id="selectedSubMenu"></div>
+			<div class="subMenuClass" onclick="moverMenu(1)">
 				<i class="fa fa-home barSettingsIcons"></i>
 				<br>
 				<span class="subMenuTitle"> Tareas</span>
 			</div>
-			<div class="subMenuClass">
+			<div class="subMenuClass" onclick="moverMenu(2)">
 				<i class="fa fa-bar-chart barSettingsIcons"></i>
 				<br>
 				<span class="subMenuTitle"> Estadisticas</span>
 			</div>
-			<div class="subMenuClass">
+			<div class="subMenuClass" onclick="moverMenu(3)">
 				<i class="fa fa-book barSettingsIcons"></i>
 				<br>
 				<span class="subMenuTitle" id="historyBtn"> Historial</span>
@@ -75,7 +91,10 @@
 		</div>
 		<a href="mailto:vacj.22@gmail.com?subject=Feedback">
 			<div class="viewBtn">
-				<span class="headText">Enviar Feedback</span>
+				<span class="headText">
+					<i class="fa fa-bug"></i>
+					Enviar Feedback
+				</span>
 				<i class="material-icons settingsIcons">keyboard_arrow_right</i><br>
 			</div>
 		</a>
@@ -101,13 +120,19 @@
 			<input id="taskName" type="text" placeholder="New Task Name"><br>
 			<span class="addTaskText">Tags</span><br>
 			<div id="tags">
-				<span class="subTask" id="noTagText">Please select one tag for this task</span>
-				<input id="taskTagSelect" type="time"><br>
+				<select name="tag" id="tag">
+					<option value="Estudiar">Estudiar</option>
+					<option value="Trabajar">Trabajar</option>
+					<option value="Investigar">Investigar</option>
+					<option value="Deporte">Deporte</option>
+				</select>
 			</div>
 			<span class="addTaskText">Start Time</span><br>
 			<div id="startTime">
+				<i class="fa fa-calendar"></i>
 				<input id="taskDate" type="date"><br>
-				<input id="taskStartTime" type="time"><br>
+				<i class="fa fa-clock-o"></i>
+				<input id="taskStartTime" type="time" onchange="checkTime(this.value)"><br>
 			</div>
 			<br>
 			<div id="sliderContainer">
@@ -118,7 +143,6 @@
 				<span class="addTaskText">Largo del descanso largo</span><br>
 				<input type="range" min="0" max="30" id="longBreakTime" class="newTaskSlider" value="15" onchange="updateNewPomo(this.value, 'longPomoLengthText')"><span id="longPomoLengthText">15 min</span><br>
 			</div>
-			<!-- repetir pomodoro: diario, semanal o mensualmente -->
 			<div class="endThemeBtn">
 				<button type="button" class="menuButton" id="addNewTaskBtn">Add</button>
 			</div>
@@ -131,13 +155,13 @@
 				<span class="popupText">Alarm 1</span> <input type="radio" class="popupRadio" id="userAlarmR1" name="userTheme" value="Alarm 1" onclick="playAlarm(1)" checked><br>
 			</div>
 			<div class="themeBtn">
-				<span class="popupText">Analog</span> <input type="radio"  class="popupRadio" id="userAlarmR2" name="userTheme" value="Analog"  onclick="playAlarm(2)" ><br>
+				<span class="popupText">Analog</span> <input type="radio"  class="popupRadio" id="userAlarmR2" name="userTheme" value="Analog"  onclick="playAlarm(2)"><br>
 			</div>
 			<div class="themeBtn">
-				<span class="popupText">Alarm 2</span> <input type="radio"  class="popupRadio" id="userAlarmR3" name="userTheme" value="Alarm"  onclick="playAlarm(3)" ><br><br>
+				<span class="popupText">Alarm 2</span> <input type="radio"  class="popupRadio" id="userAlarmR3" name="userTheme" value="Alarm"  onclick="playAlarm(3)"><br><br>
 			</div>
 			<div class="themeBtn">
-				<span class="popupText">No Alarm</span> <input type="radio" class="popupRadio" id="userAlarmR4" name="userTheme" value="No Alarm" checked><br>
+				<span class="popupText">No Alarm</span> <input type="radio" class="popupRadio" id="userAlarmR4" name="userTheme" value="No Alarm"><br>
 			</div>
 			<div class="endThemeBtn">
 				<button type="button" class="menuButton" id="cancelAlarmBox">Cancelar</button>
@@ -176,9 +200,14 @@
 		<button type="button" class="menuButton" id="deleteYes">Yes</button>
 	</div>
 
-	<div class="optionsBox" id="fieldsAlert">
-		<span class="popupText">Please fill all fields before adding tasks</span><br>
-		<button type="button" class="menuButton" id="fieldsOk">Ok</button>
+	<div class="optionsBox" id="errorW">
+		<div class="headerContainer" id="errorHeader">
+			<div class="settingsTitle" id="errorTitle">
+				<span>Error</span>
+			</div>
+		</div>
+		<span class="popupText" id="errorMsg">Please fill all fields before adding tasks</span><br>
+		<button type="button" class="menuButton" id="errorBtn">Ok</button>
 	</div>
 
 	<div class="optionsBox" id="editWindow">
@@ -192,8 +221,9 @@
 			<input id="editTaskName" type="text"><br>
 			<span class="addTaskText">Start Time</span><br>
 			<div id="editWTime">
+				<i class="fa fa-calendar"></i>
 				<input id="editTaskDate" type="date"><br>
-				<input id="editTaskStartTime" type="time"><br>
+				<input id="editTaskStartTime" type="time" onchange="checkTime(this.value)"><br>
 			</div>
 			<div id="editSliderContainer">
 				<span class="addTaskText">Largo del Pomodoro</span><br>
@@ -203,7 +233,10 @@
 				<span class="addTaskText">Largo del descanso largo</span><br>
 				<input type="range" min="0" max="30" id="editLongBreakTime" class="newTaskSlider" value="15" onchange="updateNewPomo(this.value, 'editLongBreakDuration')"><span id="editLongBreakDuration" class="editPTime">15 min</span><br>
 			</div>
-			<button type="button" class="menuButton" id="deleteTaskBtn">Delete Task</button>
+			<button type="button" class="menuButton" id="deleteTaskBtn">
+				<i class="fa fa-trash-o"></i>
+				Delete Task
+			</button>
 			<div class="endThemeBtn">
 				<button type="button" class="menuButton" id="cancelEditBtn">Cancel</button>
 				<button type="button" class="menuButton" id="addChangesBtn">Save</button>
@@ -221,5 +254,6 @@
 		<button type="button" class="menuButton" id="startYes">Yes</button>
 	</div>
 	<div id="shadowBox"></div>
+	<div id="shadowBoxPop"></div>
 	<script src="js/index.js"></script>
 </body>

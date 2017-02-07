@@ -44,24 +44,18 @@ function pageLoaded(){
 	var shadowBox = document.getElementById("shadowBox");
 	var themeBtn = document.getElementById("themeBtn");
 	var alarmBtn = document.getElementById("alarmBtn");
-	var history = document.getElementById("history");
-	var historyBtn = document.getElementById("historyBtn");
 	var tasks = document.getElementById("tasks");
-	var fieldsAlert = document.getElementById("fieldsAlert");
-	var fieldsOk = document.getElementById("fieldsOk");
 	// Load user settings from localStorage and update the app object
 	loadAppState();
 	// Put the values in the actual dom
 	taskUpdate();
 	loadAppDom();
+	loadAllTasks();
+	loadStats();
 	updateUserTheme();
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
-	historyBtn.onclick = function(){
-	    tasks.classList.add("hideContainer");
-	    history.classList.add("showSettings");
-	};
 
 	addBtn.onclick = function addNewTask(){
 		// Shows the add new task menu and waits for user input
@@ -85,6 +79,7 @@ function pageLoaded(){
 					taskUpdate();
 					saveAppState();
 					loadAppDom();			// Re-load the task list
+					loadAllTasks();
 					document.getElementById("taskName").value = "";
 					addNewTaskBox.classList.remove("showNewTask");
 					mainBox.classList.remove("hideMainLeft");
@@ -176,7 +171,6 @@ function decreaseTime(){
 	var timeShown = document.getElementById("time");
 	if(clock.minutes == 0 && clock.seconds == 0){
 		// Pomodoro Completed
-		playAlarmClock();
 		finishedPomodoro();
 		stopPomodoro();
 	}else if(clock.seconds == 0){
@@ -194,6 +188,8 @@ function decreaseTime(){
 }
 
 function finishedPomodoro(){
+	// A pomodoro has finished
+	playAlarmClock();
 	for(var i = 0; i < app.pomodorosForToday.length; i++){
 		if(app.pomodorosForToday[i].id === app.currentTask.id){
 			app.pomodorosForToday[i].finished = true;
@@ -209,6 +205,7 @@ function finishedPomodoro(){
 	app.stats.finishedPomos++;
 	saveAppState();
 	loadAppDom();
+	loadAllTasks();
 	document.getElementById("minorText").innerHTML = "No active tasks";
 	if(app.settings.alarmVibrate === true){
 			Android.alarmVibrate();
@@ -501,6 +498,17 @@ function taskUpdate(){
 	}
 }
 
+function loadAllTasks(){
+	// Sets values stored in the app object in the actual html
+	var date = getCurrentDate();
+	var pomodoros = app.pomodoros;
+	document.getElementById("history").innerHTML = "";
+	// Add pomodoros scheduled for today to the "tasks" menu
+	for(var i = 0; i < pomodoros.length; i++){
+		addDomTask(pomodoros[i], "history");
+	}
+}
+
 function loadAppDom(){
 	// Sets values stored in the app object in the actual html
 	var date = getCurrentDate();
@@ -508,7 +516,7 @@ function loadAppDom(){
 	document.getElementById("tasks").innerHTML = "";
 	// Add pomodoros scheduled for today to the "tasks" menu
 	for(var i = 0; i < pomodoros.length; i++){
-		addDomTask(pomodoros[i]);
+		addDomTask(pomodoros[i], "tasks");
 	}
 }
 
@@ -523,6 +531,7 @@ function addTask(){
 	newTask.longBreak = document.getElementById("longBreakTime").value;
 	newTask.startNow = false;
 	newTask.finished = false;
+	newTask.failed = false;
 	newTask.tag = document.getElementById("tag").value;
 	app.ids.push(newTask.id);
 	app.pomodoros.push(newTask);
@@ -539,8 +548,8 @@ function randomId(){
 	return number.toString();
 }
 
-function addDomTask(task){
-	var tasks = document.getElementById("tasks");
+function addDomTask(task, domContainer){
+	var tasks = document.getElementById(domContainer);
 	var container = document.createElement("div");
 	var title = document.createElement("span");
 	var subTitle = document.createElement("subTask");
@@ -554,7 +563,9 @@ function addDomTask(task){
 	container.classList.add("task");
 	title.classList.add("taskText");
 	subTitle.classList.add("subTask");
-	if(task.finished === false){
+	if(task.failed === true){
+		icon.classList.add("fa", "fa-times-circle", "fa-lg", "failedTask");
+	}else if(task.finished === false){
 		icon.classList.add("fa", "fa-circle-o", "fa-lg", "taskState");
 	}else{
 		icon.classList.add("fa", "fa-check-circle-o", "fa-lg", "taskState");
@@ -564,28 +575,31 @@ function addDomTask(task){
 	title.appendChild(icon);
 	title.innerHTML += " " + task.name;
 	subTitle.innerHTML = task.startTime + " - " + task.duration + " minutes";
-
-	title.onclick = function (){
-		// abrir mensaje preguntando si quieres empezar el pomodoro ahora
-		if(task.finished === false){
-			shadowBox.style.pointerEvents = 'auto';
-			shadowBox.classList.add("showShadowBox");
-			startNow.classList.add("showAlert");
-			startNowBtnY.onclick = function(){
-				task.startNow = true;
-				app.currentTask = task;
-				shadowBox.style.pointerEvents = 'none';
-				shadowBox.classList.remove("showShadowBox");
-				startNow.classList.remove("showAlert");
-				startPomodoro();
-			};
-			startNowBtnN.onclick = function(){
-				shadowBox.style.pointerEvents = 'none';
-				shadowBox.classList.remove("showShadowBox");
-				startNow.classList.remove("showAlert");
-			};
-		}
-	};
+	if(domContainer !== "history"){
+		title.onclick = function (){
+			// abrir mensaje preguntando si quieres empezar el pomodoro ahora
+			if(task.finished === false){
+				shadowBox.style.pointerEvents = 'auto';
+				shadowBox.classList.add("showShadowBox");
+				startNow.classList.add("showAlert");
+				startNowBtnY.onclick = function(){
+					task.startNow = true;
+					app.currentTask = task;
+					shadowBox.style.pointerEvents = 'none';
+					shadowBox.classList.remove("showShadowBox");
+					startNow.classList.remove("showAlert");
+					startPomodoro();
+				};
+				startNowBtnN.onclick = function(){
+					shadowBox.style.pointerEvents = 'none';
+					shadowBox.classList.remove("showShadowBox");
+					startNow.classList.remove("showAlert");
+				};
+			}
+		};
+	}else{
+		subTitle.innerHTML += " - " + task.date;
+	}
 	editIcon.onclick = function (){
 		// editar la tarea
 		editTask(this.parentElement.id);
@@ -632,9 +646,9 @@ function editTask(taskId){
 	taskDuration.value = task.duration;
 	taskBreak.value = task.break;
 	taskLongBreak.value = task.longBreak;
-	document.getElementById("editDuration").value = task.duration;
-	document.getElementById("editBreakTime").value = task.break;
-	document.getElementById("editLongBreakTime").value = task.longBreak;
+	document.getElementById("editPomoDuration").innerHTML = task.duration + " min";
+	document.getElementById("editBreakDuration").innerHTML = task.break + " min";
+	document.getElementById("editLongBreakDuration").innerHTML = task.longBreak + " min";
 	// We show the popup window
 	shadowBox.style.pointerEvents = 'auto';
 	shadowBox.classList.add("showShadowBox");
@@ -650,6 +664,7 @@ function editTask(taskId){
 			app.pomodoros[position].longBreak = taskLongBreak.value;
 			saveAppState();
 			loadAppDom();
+			loadAllTasks();
 			shadowBox.style.pointerEvents = 'none';
 			shadowBox.classList.remove("showShadowBox");
 			window.classList.remove("showAlert");
@@ -673,6 +688,7 @@ function editTask(taskId){
 			app.ids.splice(idIndex, 1);
 			saveAppState();
 			taskUpdate();
+			loadAllTasks();
 			loadAppDom();
 			shadowBox.style.pointerEvents = 'none';
 			shadowBox.classList.remove("showShadowBox");
@@ -683,4 +699,49 @@ function editTask(taskId){
 			window.classList.add("showAlert");
 		};
 	};
+}
+
+function moverMenu(num){
+	// I could set a timeout for when animation end for adding new changes
+	var selectBar = document.getElementById("selectedSubMenu");
+	var secondMenu = document.getElementById("secondMenu");
+	if(num === 1){
+		if(!selectBar.classList.contains("moveBar1")){
+			selectBar.classList.add("moveBar1");
+			selectBar.classList.remove("moveBar2");
+			selectBar.classList.remove("moveBar3");
+
+			secondMenu.classList.add("moveSecondMenu1");
+			secondMenu.classList.remove("moveSecondMenu2");
+			secondMenu.classList.remove("moveSecondMenu3");
+		}
+	}else if(num === 2){
+		if(!selectBar.classList.contains("moveBar2")){
+			selectBar.classList.add("moveBar2");
+			selectBar.classList.remove("moveBar1");
+			selectBar.classList.remove("moveBar3");
+
+			secondMenu.classList.add("moveSecondMenu2");
+			secondMenu.classList.remove("moveSecondMenu1");
+			secondMenu.classList.remove("moveSecondMenu3");
+		}
+	}else if(num === 3){
+		if(!selectBar.classList.contains("moveBar3")){
+			selectBar.classList.add("moveBar3");
+			selectBar.classList.remove("moveBar1");
+			selectBar.classList.remove("moveBar2");
+
+			secondMenu.classList.add("moveSecondMenu3");
+			secondMenu.classList.remove("moveSecondMenu1");
+			secondMenu.classList.remove("moveSecondMenu2");
+		}
+	}
+}
+
+function loadStats(){
+	var statsW = document.getElementById("stats");
+	var title = document.getElementById("statsTitle");
+
+	title.innerHTML = app.stats.finishedPomos;
+
 }

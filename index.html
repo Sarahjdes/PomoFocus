@@ -6,9 +6,8 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="fonts/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/style.css">
-	<script src="js/d3.min.js"></script>
+	<script src="js/Chart.bundle.min.js"></script>
 </head>
-
 
 <body>
 	<div id="container">
@@ -31,9 +30,26 @@
 					<div id="tasks"></div>
 				</div>
 				<div class="cell">
+					<!-- ESTADISTICAS -->
 					<div id="stats">
-						<h3>Pomodors Finished: </h3>
-						<span id="statsTitle"></span><br>
+						<h3 id="statsTitle">Showing stats for</h3><br>
+						<input id="fromTime" type="date" class="chartTime" onchange="reloadStats()"> -
+						<input id="toTime" type="date" class="chartTime" onchange="reloadStats()"><br>
+						<div id="basicStatsBox">
+							<div class="statBox">
+								<span>Pomodoros Total Time: </span><b><span id="statsTime">3 hrs, 16 min</span></b><br>
+							</div>
+							<div class="statBox">
+								<span>Pomodoros Finished: </span><b><span id="statsFinished">12</span></b><br>
+							</div>
+							<div class="statBox">
+								<span>Pomodoros Failed: </span><b><span id="statsFailed">3</span></b><br>
+							</div>
+							<div class="statBox">
+								<span>Success Rate: </span><b><span id="statsRate">68%</span></b><br>
+							</div>
+						</div>
+						<button type="button" class="menuButton" id="seeChartBtn">See Charts</button>
 					</div>
 				</div>
 				<div class="cell">
@@ -210,6 +226,20 @@
 		<button type="button" class="menuButton" id="errorBtn">Ok</button>
 	</div>
 
+	<div class="optionsBox" id="chartW">
+		<div class="headerContainer" id="chartHeader">
+			<div class="settingsTitle" id="chartTitle">
+				<span>Estadisticas</span>
+			</div>
+		</div>
+		<div>
+			<button type="button" class="sharedBtn" id="donutChartBtn">Donut Chart</button>
+			<button type="button" class="sharedBtn" id="barChartBtn">Bar Chart</button>
+			<canvas id="myChart"></canvas>
+		</div>
+		<button type="button" class="menuButton" id="chartBackBtn">Back</button>
+	</div>
+
 	<div class="optionsBox" id="editWindow">
 		<div class="headerContainer" id="editHeader">
 			<div class="settingsTitle" id="editTaskTitle">
@@ -223,6 +253,7 @@
 			<div id="editWTime">
 				<i class="fa fa-calendar"></i>
 				<input id="editTaskDate" type="date"><br>
+				<i class="fa fa-clock-o"></i>
 				<input id="editTaskStartTime" type="time" onchange="checkTime(this.value)"><br>
 			</div>
 			<div id="editSliderContainer">

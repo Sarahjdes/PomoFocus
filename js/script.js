@@ -19,14 +19,13 @@ var app = {
     },
 		"currentTask" : {}
 		,
-		"tags" : [],
 		"ids" : [],
 		"pomodoros" : [],
 		"pomodorosForToday" : []
 };
 
 var userCanAddTask = true;
-
+var chartTasks = [];
 window.onload = pageLoaded();
 
 function pageLoaded(){
@@ -45,18 +44,40 @@ function pageLoaded(){
 	var themeBtn = document.getElementById("themeBtn");
 	var alarmBtn = document.getElementById("alarmBtn");
 	var tasks = document.getElementById("tasks");
+	var seeChartBtn = document.getElementById("seeChartBtn");
 	// Load user settings from localStorage and update the app object
 	loadAppState();
 	// Put the values in the actual dom
+	updateUserTheme();
 	taskUpdate();
 	loadAppDom();
 	loadAllTasks();
-	loadStats();
-	updateUserTheme();
+	statDates();
+	reloadStats();
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
 
+	seeChartBtn.onclick = function(){
+		var chartW = document.getElementById("chartW");
+		var barChartBtn = document.getElementById("barChartBtn");
+		var donutChartBtn = document.getElementById("donutChartBtn");
+		drawCharts('doughnut');
+		shadowBox.style.pointerEvents = 'auto';
+		shadowBox.classList.add("showShadowBox");
+		chartW.classList.add("showAlert");
+		barChartBtn.onclick = function(){
+			drawCharts('bar');
+		};
+		donutChartBtn.onclick = function(){
+			drawCharts('doughnut');
+		};
+		chartBackBtn.onclick = function (){
+			shadowBox.style.pointerEvents = 'none';
+			shadowBox.classList.remove("showShadowBox");
+			chartW.classList.remove("showAlert");
+		};
+	}
 	addBtn.onclick = function addNewTask(){
 		// Shows the add new task menu and waits for user input
 		var addNewTaskBox = document.getElementById("newTaskBox");
@@ -206,6 +227,7 @@ function finishedPomodoro(){
 	saveAppState();
 	loadAppDom();
 	loadAllTasks();
+	reloadStats();
 	document.getElementById("minorText").innerHTML = "No active tasks";
 	if(app.settings.alarmVibrate === true){
 			Android.alarmVibrate();
@@ -380,9 +402,9 @@ function showThemeSelection(){
 function getCurrentDate(){
 	// Returns the current date in string format
 	var date = new Date();
-	var day = date.getDate();
 	var month = date.getMonth() + 1;
 	var year = date.getFullYear();
+	var day = date.getDate();
 	var fixedDate = fixTime(year, month, day);
 	return fixedDate;
 }
@@ -738,10 +760,90 @@ function moverMenu(num){
 	}
 }
 
-function loadStats(){
-	var statsW = document.getElementById("stats");
-	var title = document.getElementById("statsTitle");
+function reloadStats(){
+	var statsObject = {};
+	var fromTime = new Date(document.getElementById("fromTime").value).getTime();
+	var toTime = new Date(document.getElementById("toTime").value).getTime();
+	var date;
+	var pomodoros = app.pomodoros;
+	chartTasks = [];
+	statsObject.total = 0;
+	statsObject.minutes = 0;
+	statsObject.finished = 0;
+	statsObject.failed = 0;
+	statsObject.rate = 0;
 
-	title.innerHTML = app.stats.finishedPomos;
+	for(var i = 0; i < pomodoros.length; i++){
+		date = new Date(pomodoros[i].date).getTime();
+		if(date >= fromTime && date <= toTime){
+			if(pomodoros[i].finished === true){
+				chartTasks.push(pomodoros[i]);
+				statsObject.minutes += parseInt(pomodoros[i].duration);
+				statsObject.total++;
+				statsObject.finished++;
+			}else if(pomodoros[i].failed === true){
+				statsObject.minutes += parseInt(pomodoros[i].duration);
+				statsObject.failed++;
+				statsObject.total++;
+			}
+		}
+	}
 
+	if(statsObject.total > 0){
+		statsObject.rate = (statsObject.finished * 100) / statsObject.total;
+	}
+
+	document.getElementById("statsTime").innerHTML = fixTotal(statsObject.minutes);
+	document.getElementById("statsFinished").innerHTML = statsObject.finished;
+	document.getElementById("statsFailed").innerHTML = statsObject.failed;
+	document.getElementById("statsRate").innerHTML = statsObject.rate.toFixed(1) + "%";
+}
+
+function statDates(){
+	var date = new Date();
+	date.setDate(date.getDate() - 10);
+	var month = date.getMonth() + 1;
+	var year = date.getFullYear();
+	document.getElementById("fromTime").value = fixTime(year, month, date.getDate());
+	document.getElementById("toTime").value = getCurrentDate();
+}
+
+function fixTotal(num){
+	if(num > 60){
+		var hours, minutes;
+		hours = Math.trunc(num / 60);
+		minutes = num - (hours * 60);
+		return hours + " hrs, " + minutes + " min";
+	}else{
+		return num + " min";
+	}
+}
+
+function drawCharts(charType){
+	var ctx = document.getElementById("myChart").getContext('2d');
+	var names = ["Estudiar", "Trabajar", "Investigar", "Deporte"];
+	var bgColorArray = ["#bb4af7", "#ff80b3", "#6e4ff7", "f7525f"];
+
+	var backgroundColor = [];
+	var tagData = [0, 0, 0, 0];// LLnear con ceros
+
+	for(var i = 0; i < names.length; i++){
+		for(var j = 0; j < chartTasks.length; j++){
+			if(chartTasks[j].tag === names[i]){
+				tagData[i]++;
+			}
+		}
+	}
+
+	var myChart = new Chart(ctx, {
+		type: charType,
+		data: {
+			labels: names,
+			datasets: [{
+				label: 'Tasks',
+				backgroundColor: bgColorArray,
+				data: tagData
+			}]
+		}
+	});
 }

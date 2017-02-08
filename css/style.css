@@ -555,6 +555,7 @@ h1{
   width: 100vw;
   height: 50vh;
   margin-top: 5px;
+  padding-top: 10px;
   overflow: scroll;
   z-index: 1;
 }
@@ -684,6 +685,59 @@ h1{
 }
 .menuButton:active{
 	background: #c4c4c4;
+}
+.chartTime{
+  width: 104px !important;
+  min-width: 80px !important;
+}
+#basicStatsBox{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 5px;
+  padding-left: 21px;
+  color: rgb(109, 109, 109);
+  text-align: left;
+}
+#statsTitle{
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: rgb(109, 109, 109);
+  margin: 3px;
+  margin-bottom: -4px;
+}
+#chartW{
+  padding: 10px;
+  text-align: center;
+}
+#chartHeader{
+  height: 15px;
+  padding-top: 10%;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+#chartTitle{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  line-height: 5px;
+}
+#seeChartBtn{
+  margin-top: 14px;
+}
+.sharedBtn{
+  width: 50%;
+  height: 35px;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  border: 1px solid #c4c4c4;
+  /*border-radius: 8px;*/
+  float: left;
+}
+.statBox{
+  margin-top: 3px;
 }
 #shadowBox{
   pointer-events: none;

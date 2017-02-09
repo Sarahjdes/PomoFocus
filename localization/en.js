@@ -41,7 +41,7 @@ var language = [
   },
   {
     "textId" : "cancelAlarmBox",
-    "text" : "Cancell"
+    "text" : "Cancel"
   },
   {
     "textId" : "vibrateText",

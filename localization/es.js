@@ -1,4 +1,4 @@
-var language = [
+var languageES = [
   {
     "textId" : "tasksBtn",
     "text" : "Tareas"
@@ -21,11 +21,11 @@ var language = [
   },
   {
     "textId" : "alarmSound",
-    "text" : "Alarm Sound"
+    "text" : "Sonido de Alarma"
   },
   {
     "textId" : "alarmVolume",
-    "text" : "Sonido de Alarma"
+    "text" : "Volumen de Alarma"
   },
   {
     "textId" : "noAlarm",
@@ -110,6 +110,10 @@ var language = [
   {
     "textId" : "pomodorosFinished",
     "text" : "Pomodoros Terminados:"
+  },
+  {
+    "textId" : "pomodorosFailed",
+    "text" : "Pomodoros Fallidos:"
   },
   {
     "textId" : "successRate",

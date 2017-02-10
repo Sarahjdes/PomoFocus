@@ -40,6 +40,7 @@
         font-size: 18px !important;
     }
 }
+
 #container{
   position: fixed;
   margin: 0 auto;
@@ -52,16 +53,19 @@
   transition: 300ms ease-out;
   z-index: 1;
 }
+
 .hideMainRight{
   -webkit-transform: translateX(150%);
 	transform: translateX(150%);
   will-change: transform;
 }
+
 .hideMainLeft{
   -webkit-transform: translateX(-150%);
 	transform: translateX(-150%);
   will-change: transform;
 }
+
 #player{
   position: relative;
 	background: radial-gradient(ellipse farthest-corner at center, #47C9A2 0%, #26A69A 100%);
@@ -422,6 +426,7 @@ h1{
   height: 50vh;
 	background: #ffffff;
 	margin-top: 5px;
+  padding-left: 5px;
   overflow: scroll;
   z-index: 1;
 }
@@ -429,7 +434,6 @@ h1{
 	width: 100%;
 	/*border-bottom: 1px solid rgba(194,194,194,.25);*/
 	background: #ffffff;
-	padding-left: 5%;
 	padding-top: 4%;
 	text-align: left;
 	height: 40px;
@@ -510,20 +514,24 @@ h1{
   border-top: 1px solid rgba(194,194,194,.25);
   padding-top: 15px;
 }
+
 .newTaskSlider{
   width: 180px;
   text-align: center;
   margin: 15px 5px 15px 20%;
 }
+
 #history{
   position: absolute;
  	width: 100vw;
   height: 50vh;
  	background: #ffffff;
  	margin-top: 5px;
+  padding-left: 5px;
   overflow: scroll;
   z-index: 1;
 }
+
 #secondMenu{
   position: absolute;
   display: table;
@@ -531,6 +539,7 @@ h1{
   height: 400px;
   transition: 300ms ease-out;
 }
+
 .moveSecondMenu1{
   -webkit-transform: translateX(0vw);
   transform: translateX(0vw);
@@ -701,6 +710,7 @@ h1{
   color: rgb(109, 109, 109);
   text-align: left;
 }
+
 #statsTitle{
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -708,37 +718,44 @@ h1{
   margin: 3px;
   margin-bottom: -4px;
 }
+
 #chartW{
   padding: 10px;
   text-align: center;
 }
+
 #chartHeader{
   height: 15px;
   padding-top: 10%;
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
+
 #chartTitle{
   padding-top: 0px;
   padding-bottom: 0px;
   line-height: 5px;
 }
+
 #seeChartBtn{
-  margin-top: 14px;
+  width: auto;
 }
-.sharedBtn{
+
+.shared-btn{
   width: 50%;
-  height: 35px;
+  height: 42px;
   background: white;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
+  margin-bottom: 2px;
   border: 1px solid #c4c4c4;
-  /*border-radius: 8px;*/
   float: left;
 }
+
 .statBox{
   margin-top: 3px;
 }
+
 #shadowBox{
   pointer-events: none;
   opacity: 0;
@@ -752,6 +769,7 @@ h1{
   transition: 300ms ease-out;
 	z-index: 10;
 }
+
 #shadowBoxPop{
   pointer-events: none;
   opacity: 0;
@@ -765,6 +783,7 @@ h1{
   transition: 300ms ease-out;
 	z-index: 19;
 }
+
 .showShadowBox{
   transition-property: opacity !important;
   opacity: 0.8 !important;

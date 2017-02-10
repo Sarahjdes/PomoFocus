@@ -112,6 +112,10 @@ var language = [
     "text" : "Pomodoros Finished:"
   },
   {
+    "textId" : "pomodorosFailed",
+    "text" : "Pomodoros Failed:"
+  },
+  {
     "textId" : "successRate",
     "text" : "Success Rate:"
   },

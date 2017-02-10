@@ -25,6 +25,7 @@ var app = {
 };
 
 var userCanAddTask = true;
+var finishedTaskText;
 var chartTasks = [];
 window.onload = pageLoaded();
 
@@ -47,6 +48,7 @@ function pageLoaded(){
 	var seeChartBtn = document.getElementById("seeChartBtn");
 	// Load user settings from localStorage and update the app object
 	loadAppState();
+	translate();
 	// Put the values in the actual dom
 	updateUserTheme();
 	taskUpdate();
@@ -54,6 +56,7 @@ function pageLoaded(){
 	loadAllTasks();
 	statDates();
 	reloadStats();
+
 	startBtn.onclick = startPomodoro;
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
@@ -158,6 +161,7 @@ function activeTask(task, time){
 function startPomodoro(){
 	// This function will start a new pomodoro once the start or reset buttons have been clicked.
 	var currentTask = app.currentTask;
+	finishedTaskText = document.getElementById("minorText").innerHTML;
 	if(activeTask(currentTask) === true){
 		// set the minutes and seconds
 		document.getElementById("minorText").innerHTML = "Working on: " + currentTask.name;
@@ -210,6 +214,26 @@ function decreaseTime(){
 
 function finishedPomodoro(){
 	// A pomodoro has finished
+	var congratsBox = document.getElementById("finishedPomoBox");
+	var startBreakBtn = document.getElementById("startBreakText");
+	var startLongBreakBtn = document.getElementById("startLongBreakText");
+	var quitBtn = document.getElementById("quitText");
+	var shadowBox = document.getElementById("shadowBox");
+	shadowBox.style.pointerEvents = 'auto';
+	shadowBox.classList.add("showShadowBox");
+	congratsBox.classList.add("showAlert");
+
+	startBreakBtn.onclick = function (){
+		// start short break
+	};
+	startLongBreakBtn.onclick = function (){
+		// start long break
+	};
+	quitBtn.onclick = function (){
+		shadowBox.style.pointerEvents = 'none';
+		shadowBox.classList.remove("showShadowBox");
+		congratsBox.classList.remove("showAlert");
+	};
 	playAlarmClock();
 	for(var i = 0; i < app.pomodorosForToday.length; i++){
 		if(app.pomodorosForToday[i].id === app.currentTask.id){
@@ -228,7 +252,7 @@ function finishedPomodoro(){
 	loadAppDom();
 	loadAllTasks();
 	reloadStats();
-	document.getElementById("minorText").innerHTML = "No active tasks";
+	document.getElementById("minorText").innerHTML = finishedTaskText;
 	if(app.settings.alarmVibrate === true){
 			Android.alarmVibrate();
 	}
@@ -840,10 +864,26 @@ function drawCharts(charType){
 		data: {
 			labels: names,
 			datasets: [{
-				label: 'Tasks',
+				label: '',
 				backgroundColor: bgColorArray,
 				data: tagData
 			}]
 		}
 	});
+}
+
+function translate(){
+	var userLanguage = window.navigator.userLanguage || window.navigator.language;
+	var langCode = userLanguage.substr(0, 2);
+	var language;
+	if(langCode === "en"){
+		// load english script
+		language = languageEN;
+	}else if(langCode === "es"){
+		// load spanish script
+		language = languageES;
+	}
+	for(var i = 0; i < language.length; i++){
+		document.getElementById(language[i].textId).innerHTML = language[i].text;
+	}
 }

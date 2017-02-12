@@ -61,6 +61,10 @@ function pageLoaded(){
 	stopBtn.onclick = stopPomodoro;
 	resetBtn.onclick = resetPomodoro;
 
+	setInterval(function(){
+		 checkAlarms();
+	 }, 1000);
+
 	seeChartBtn.onclick = function(){
 		var chartW = document.getElementById("chartW");
 		var barChartBtn = document.getElementById("barChartBtn");
@@ -96,7 +100,9 @@ function pageLoaded(){
 
 		addNewTaskBtn.onclick = function saveTask(){
 			// add the new task to the app object
-			checkTime(document.getElementById("taskStartTime").value);
+			if(document.getElementById("taskDate").value === getCurrentDate()){
+				checkTime(document.getElementById("taskStartTime").value);
+			}
 			if(userCanAddTask === true){
 				if(filledForm() === true){
 					addTask();
@@ -546,7 +552,6 @@ function taskUpdate(){
 
 function loadAllTasks(){
 	// Sets values stored in the app object in the actual html
-	var date = getCurrentDate();
 	var pomodoros = app.pomodoros;
 	document.getElementById("history").innerHTML = "";
 	// Add pomodoros scheduled for today to the "tasks" menu
@@ -557,7 +562,6 @@ function loadAllTasks(){
 
 function loadAppDom(){
 	// Sets values stored in the app object in the actual html
-	var date = getCurrentDate();
 	var pomodoros = app.pomodorosForToday;
 	document.getElementById("tasks").innerHTML = "";
 	// Add pomodoros scheduled for today to the "tasks" menu
@@ -886,4 +890,42 @@ function translate(){
 	for(var i = 0; i < language.length; i++){
 		document.getElementById(language[i].textId).innerHTML = language[i].text;
 	}
+}
+
+function checkAlarms(){
+	var date = new Date();
+	var arr = app.pomodorosForToday;
+	var hour = date.getHours();
+	var minutes = date.getMinutes();
+	var currentTime = hour + ":" + minutes;
+
+	for(var i = 0; i < arr.length; i++){
+		if(arr[i].startTime === currentTime && arr[i].startNow === false){
+			startTask(i);
+		}
+	}
+}
+function startTask(i){
+	var startNowBox = document.getElementById("startTask");
+	var shadowBox = document.getElementById("startNowShadow");
+	var startYes = document.getElementById("startTaskYes");
+	var startNo = document.getElementById("startTaskNo");
+
+	shadowBox.style.pointerEvents = 'auto';
+	shadowBox.classList.add("showShadowBox");
+	startNowBox.classList.add("showAlert");
+
+	startYes.onclick = function(){
+		shadowBox.style.pointerEvents = 'none';
+		shadowBox.classList.remove("showShadowBox");
+		startNowBox.classList.remove("showAlert");
+		app.pomodorosForToday[i].startNow = true;
+		app.currentTask = app.pomodorosForToday[i];
+		startPomodoro();
+	};
+	startNo.onclick = function(){
+		shadowBox.style.pointerEvents = 'none';
+		shadowBox.classList.remove("showShadowBox");
+		startNowBox.classList.remove("showAlert");
+	};
 }
